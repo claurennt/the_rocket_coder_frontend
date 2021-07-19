@@ -1,7 +1,15 @@
 import "./App.css";
+
 import ReactWeather, { useOpenWeather } from "react-open-weather";
 import { useState, useEffect } from "react";
 import { usePosition } from "use-position";
+
+import { ClientContext } from "graphql-hooks";
+import { client } from "./db/GraphQLClient";
+
+import MainBody from "./Components/MainBody";
+
+
 function App() {
   const [location, setLocation] = useState();
   const watch = true;
@@ -26,7 +34,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+     <header className="App-header">
         {location && (
           <ReactWeather
             isLoading={isLoading}
@@ -39,7 +47,12 @@ function App() {
           />
         )}
       </header>
+     <ClientContext.Provider value={client}>  <div>
+        <MainBody />
+      </div>
+      </ClientContext.Provider>   
     </div>
+
   );
 }
 
