@@ -1,3 +1,5 @@
+
+
 .App {
   text-align: center;
 }
@@ -24,8 +26,14 @@
   color: white;
 }
 
+.t{
+  font-family: 'Audiowide', cursive;
+  font-weight: thin;
+  font-size: 12px;
+}
+
 .App-link {
-  color: #61dafb;
+  color: #61dafb; 
 }
 
 @keyframes App-logo-spin {
