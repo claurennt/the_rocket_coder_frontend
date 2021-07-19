@@ -9,7 +9,6 @@ import { client } from "./db/GraphQLClient";
 
 import MainBody from "./Components/MainBody";
 
-
 function App() {
   const [location, setLocation] = useState();
   const watch = true;
@@ -21,6 +20,20 @@ function App() {
     lang: "en",
     unit: "metric", // values are (metric, standard, imperial)
   });
+  const customStyles = {
+    background: "yellow",
+    fontFamily: "Roboto",
+    gradientStart: "red",
+    gradientMid: "#04A7F9",
+    gradientEnd: "#4BC4F7",
+    locationFontColor: "#FFF",
+    todayTempFontColor: "#FFF",
+    todayDateFontColor: "#B5DEF4",
+    todayRangeFontColor: "#B5DEF4",
+    todayDescFontColor: "#B5DEF4",
+    todayInfoFontColor: "#B5DEF4",
+    todayIconColor: "#FFF",
+  };
   useEffect(() => {
     fetch(
       `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en ` //domain.com/path/?param1=value1&param2=value2"
@@ -34,25 +47,27 @@ function App() {
 
   return (
     <div className="App">
-     <header className="App-header">
+      <div className="App-container-weather">
         {location && (
           <ReactWeather
+            theme={customStyles}
             isLoading={isLoading}
             errorMessage={errorMessage}
             data={data}
             lang="en"
             locationLabel={location.city}
-            unitsLabels={{ temperature: "C", windSpeed: "Km/h" }}
+            unitsLabels={{ temperature: "°C", windSpeed: "Km/h" }}
             showForecast={false}
           />
         )}
-      </header>
-     <ClientContext.Provider value={client}>  <div>
-        <MainBody />
       </div>
-      </ClientContext.Provider>   
+      <ClientContext.Provider value={client}>
+        {" "}
+        <div>
+          <MainBody />
+        </div>
+      </ClientContext.Provider>
     </div>
-
   );
 }
 
