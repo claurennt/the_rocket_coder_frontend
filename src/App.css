@@ -1,20 +1,13 @@
 .App {
-  text-align: center;
+  text-align: left;
   height: 100vh;
+  position: relative;
 }
 
+.App-container-weather {
+  position: absolute;
 
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-
-
-.App-link {
-  color: #61dafb;
+  right: 0px;
 }
 
 @keyframes App-logo-spin {
