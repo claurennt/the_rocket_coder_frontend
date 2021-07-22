@@ -2,7 +2,7 @@
 // date of today
 // weatehr of today
 //change image every day and fetch 20 images suitable with our design with the api endpoints and params. (the image logic should happen in App.js)
-// Nice images : 
+// Nice images :
 // 2021 July 18
 // 2021 July 12
 // 2021 July 10
@@ -22,7 +22,7 @@
 // 2021 May 18
 // 2021 May 17
 // 2021 May 16
-// 2021 May 15 can be the default image as it is the most beautiful and colorful 
+// 2021 May 15 can be the default image as it is the most beautiful and colorful
 // 2021 May 11
 // import React from "react";
 // import ReactWeather, { useOpenWeather } from 'react-open-weather';
