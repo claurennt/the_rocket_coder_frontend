@@ -47,7 +47,7 @@ function App() {
             : { backgroundColor: "black", height: "100vh" }
         }
       >
-        <div className="App-container-weather">
+        {/* <div className="App-container-weather">
           {latitude && longitude && location && (
             <CustomReactWeather
               latitude={latitude}
@@ -55,13 +55,11 @@ function App() {
               location={location}
             />
           )}
-        </div>
+        </div> */}
 
         <ClientContext.Provider value={client}>
           {" "}
-          <div>
-            <MainBody />
-          </div>
+          <MainBody />
         </ClientContext.Provider>
       </div>
     </>
