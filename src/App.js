@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {
     const getImage = () => {
       fetch(
-        `https://api.nasa.gov/planetary/apod?api_key=${process.env.REACT_APP_NASA_KEY}&start_date=2021-05-17&end_date=2021-05-20`
+        `https://api.nasa.gov/planetary/apod?api_key=${process.env.REACT_APP_NASA_KEY}&start_date=2021-05-08&end_date=2021-05-23`
       )
         .then((response) => response.json())
         // 4. Setting *dogImage* to the image url that we received from the response above
