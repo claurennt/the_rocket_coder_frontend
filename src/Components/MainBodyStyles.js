@@ -6,23 +6,16 @@ import { css } from "@emotion/react";
 const useStyles = makeStyles((theme) => ({
   box: {
     height: "100vh",
+
     display: "flex",
     justifyContent: "center",
     textAlign: "center",
   },
-  input: {
+  root: {
     fontSize: "1.25rem",
     fontColor: "white",
+    borderBottom: "1px solid white",
     width: "50%",
-    "&:before": {
-      borderBottom: "1px solid white",
-    },
-    "&:hover:not($disabled):not($focused):not($error):before": {
-      borderBottom: "2px solid white",
-    },
-    "&:after": {
-      borderBottom: "3px solid white",
-    },
   },
 }));
 
@@ -43,7 +36,7 @@ theme.typography.h3 = {
 
 theme.typography.h5 = {
   color: "white",
-  padding: "15px",
+  padding: "0px",
   fontSize: "1.2rem",
   "@media (min-width:600px)": {
     fontSize: "1.25rem",
@@ -55,7 +48,10 @@ theme.typography.h5 = {
 };
 theme.typography.subtitle1 = {
   color: "white",
-  padding: "15px",
+  position: "relative",
+  marginLeft: "0 ",
+  marginRight: "0 ",
+  marginTop: "4rem",
   fontSize: "0.75rem",
   "@media (min-width:600px)": {
     fontSize: "0.75rem",

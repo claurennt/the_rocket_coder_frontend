@@ -12,6 +12,15 @@ const ToDo = () => {
   const classes = useStyles();
   const [tasks, setTasks] = useState([]);
 
+  const renderThumb = () => {
+    const thumbStyle = {
+      backgroundColor: "white",
+      width: "1px",
+    };
+    return <div style={{ ...thumbStyle }} />;
+  };
+
+  // function to sort the order of the items in the list
   const compare = (a, b) => {
     if (a.createdAt > b.createdAt) return -1;
     if (b.createdAt > a.createdAt) return 1;
@@ -75,17 +84,23 @@ const ToDo = () => {
     <>
       <form onSubmit={addNewTaskToList}>
         <Input
-          className={classes.input}
+          style={{ color: "white" }}
+          className={classes.root}
           aria-describedby="todays-tasks"
           name="taskInput"
         />
 
         <IconButton aria-label="add" type="submit">
-          <AddIcon />
+          <AddIcon style={{ color: "white" }} />
         </IconButton>
       </form>
       <Scrollbars
-        style={{ maxHeight: "20%", width: "auto", marginTop: "2rem" }}
+        renderThumbVertical={renderThumb}
+        style={{
+          maxHeight: "20%",
+          width: "auto",
+          marginTop: "1.5rem",
+        }}
       >
         <List>
           {tasks &&
