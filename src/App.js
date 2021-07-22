@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import { usePosition } from "use-position";
+import useNasaPicture from "./useNasaPicture";
 
 import { ClientContext } from "graphql-hooks";
 import { client } from "./db/GraphQLClient";
@@ -9,20 +10,30 @@ import MainBody from "./Components/MainBody";
 import CustomReactWeather from "./CustomReactWeather";
 
 function App() {
+  const { picOfTheDay } = useNasaPicture();
   const [location, setLocation] = useState();
+
   const watch = true;
   const { latitude, longitude } = usePosition(watch);
-  const [backgroundImage, setBackgroundImage] = useState(null);
+  const [backgroundImages, setBackgroundImages] = useState(null);
 
   // 3. Create out useEffect function
   useEffect(() => {
-    fetch(
-      `https://api.nasa.gov/planetary/apod?api_key=${process.env.REACT_APP_NASA_KEY}&date=2021-07-18`
-    )
-      .then((response) => response.json())
-      // 4. Setting *dogImage* to the image url that we received from the response above
-      .then((data) => setBackgroundImage(data.url));
-  }, []);
+    const getImage = () => {
+      fetch(
+        `https://api.nasa.gov/planetary/apod?api_key=${process.env.REACT_APP_NASA_KEY}&start_date=2021-05-17&end_date=2021-05-20`
+      )
+        .then((response) => response.json())
+        // 4. Setting *dogImage* to the image url that we received from the response above
+        .then((data) => {
+          console.log(data);
+          setBackgroundImages(data);
+        });
+    };
+    const interval = setInterval(() => getImage(), 5000);
+    return () => clearInterval(interval);
+  }, [backgroundImages]);
+
   useEffect(() => {
     if (latitude && longitude) {
       const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`;
@@ -35,15 +46,26 @@ function App() {
         });
     }
   }, [longitude, latitude]);
-  const style = {
-    backgroundImage: `url( ${backgroundImage})`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-  };
+  // const images = images.map((image) =>
+
+  console.log(backgroundImages);
   return (
-    backgroundImage && (
-      <div className="App" style={style}>
+    <>
+      <div
+        className="App"
+        style={
+          picOfTheDay
+            ? {
+                backgroundImage: `url( ${picOfTheDay})`,
+                backgroundColor: "black",
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                height: "100vh",
+              }
+            : { backgroundColor: "black", height: "100vh" }
+        }
+      >
         <div className="App-container-weather">
           {latitude && longitude && location && (
             <CustomReactWeather
@@ -61,7 +83,7 @@ function App() {
           </div>
         </ClientContext.Provider>
       </div>
-    )
+    </>
   );
 }
 
