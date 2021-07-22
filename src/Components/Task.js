@@ -16,7 +16,8 @@ import { useSpring, animated } from "react-spring";
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
-    maxWidth: "100%",
+    width: "100%",
+
     borderColor: theme.palette.background.paper,
     color: "white",
     padding: "0px",
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
       color: "white",
     },
   },
-  icon: { margin: "2%" },
+  icon: { marginRight: "2rem" },
 }));
 
 export default function Task({
@@ -40,7 +41,6 @@ export default function Task({
   const classes = useStyles();
   const { id, text, checked, editing } = task;
 
-  console.log(checked);
   const { x } = useSpring({
     from: { x: 0 },
     x: checked ? 0 : 1,
@@ -63,9 +63,9 @@ export default function Task({
         <Checkbox
           className={classes.checkBox}
           uncheckedIcon={
-            <CheckBoxOutlineBlankOutlinedIcon style={{ fill: "#ff0000" }} />
+            <CheckBoxOutlineBlankOutlinedIcon style={{ fill: "white" }} />
           }
-          checkedIcon={<CheckBoxOutlinedIcon style={{ fill: "#ff0000" }} />}
+          checkedIcon={<CheckBoxOutlinedIcon style={{ fill: "white" }} />}
           label="Checkbox Label"
           onClick={() => toggleCheck(id)}
         />
