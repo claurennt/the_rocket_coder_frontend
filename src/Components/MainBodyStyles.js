@@ -25,46 +25,48 @@ theme.typography.h3 = {
   color: "white",
   padding: "15px",
   fontSize: "2rem",
+
   "@media (min-width:600px)": {
     fontSize: "2rem",
   },
   [theme.breakpoints.up("md")]: {
     fontSize: "3rem",
   },
-  fontWeight: "300",
+  fontWeight: "600",
 };
 
 theme.typography.h5 = {
   color: "white",
   padding: "0px",
   fontSize: "1.2rem",
+  textShadow: "1px 1px #E1E5EA",
   "@media (min-width:600px)": {
     fontSize: "1.25rem",
   },
   [theme.breakpoints.up("md")]: {
     fontSize: "2rem",
   },
-  fontWeight: "300",
+  fontWeight: "400",
 };
 theme.typography.subtitle1 = {
   color: "white",
   position: "relative",
   marginLeft: "0 ",
   marginRight: "0 ",
-  marginTop: "4rem",
-  fontSize: "0.75rem",
+  marginTop: "2rem",
+  fontSize: "1rem",
   "@media (min-width:600px)": {
-    fontSize: "0.75rem",
+    fontSize: "1rem",
   },
   [theme.breakpoints.up("md")]: {
-    fontSize: "0.75rem",
+    fontSize: "1rem",
   },
   fontWeight: "300",
 };
 theme.typography.body1 = {
-  color: "white",
+  color: "red",
   padding: "15px",
-  fontSize: "0.75rem",
+  fontSize: "7rem",
   "@media (min-width:600px)": {
     fontSize: "0.75rem",
   },
