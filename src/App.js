@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { usePosition } from "use-position";
 
 import { ClientContext } from "graphql-hooks";
-import { client } from "./db/GraphQLClient";
+import { client } from "./Client/GraphQLClient";
 
 import MainBody from "./Components/MainBody";
 

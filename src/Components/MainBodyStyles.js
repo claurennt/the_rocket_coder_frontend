@@ -11,6 +11,8 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
   input: {
+    fontSize: "1.25rem",
+    fontColor: "white",
     width: "50%",
     "&:before": {
       borderBottom: "1px solid white",
@@ -52,6 +54,18 @@ theme.typography.h5 = {
   fontWeight: "300",
 };
 theme.typography.subtitle1 = {
+  color: "white",
+  padding: "15px",
+  fontSize: "0.75rem",
+  "@media (min-width:600px)": {
+    fontSize: "0.75rem",
+  },
+  [theme.breakpoints.up("md")]: {
+    fontSize: "0.75rem",
+  },
+  fontWeight: "300",
+};
+theme.typography.body1 = {
   color: "white",
   padding: "15px",
   fontSize: "0.75rem",
