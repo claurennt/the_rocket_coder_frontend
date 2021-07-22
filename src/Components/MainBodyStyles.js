@@ -64,9 +64,9 @@ theme.typography.subtitle1 = {
   fontWeight: "300",
 };
 theme.typography.body1 = {
-  color: "white",
+  color: "red",
   padding: "15px",
-  fontSize: "0.75rem",
+  fontSize: "7rem",
   "@media (min-width:600px)": {
     fontSize: "0.75rem",
   },

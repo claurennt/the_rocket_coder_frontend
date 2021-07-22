@@ -3,9 +3,7 @@ import React from "react";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 
-import { ThemeProvider } from "@material-ui/core/styles/";
-
-import { useStyles, theme, loaderCSS } from "./MainBodyStyles";
+import { useStyles, loaderCSS } from "./MainBodyStyles";
 
 import { useQuery } from "graphql-hooks";
 import { allQuotesQuery } from "../Client/GraphQLClient";
@@ -64,27 +62,26 @@ export default function MainBody() {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <Box className={classes.box}>
-          <Box pt={20}>
-            <Typography variant="h3">
-              Good {momentOfTheDay} Rocket Coder! 🚀
-            </Typography>
-            <Typography variant="h5">
-              What are your main tasks for today?
-            </Typography>
+      <Box className={classes.box}>
+        <Box pt={20}>
+          <Typography variant="h3">
+            Good {momentOfTheDay} Rocket Coder! 🚀
+          </Typography>
+          <Typography variant="h5">
+            What are your main tasks for today?
+          </Typography>
 
-            <BarLoader
-              color="#0F044C"
-              loading={loading}
-              css={loaderCSS}
-              width={50}
-            />
-            <ToDo />
-            <Typography variant="subtitle1">{quoteElement}</Typography>
-          </Box>
+          <BarLoader
+            color="#0F044C"
+            loading={loading}
+            css={loaderCSS}
+            width={50}
+          />
+          <ToDo />
+
+          <Typography variant="subtitle1">{quoteElement}</Typography>
         </Box>
-      </ThemeProvider>
+      </Box>
     </>
   );
 }
