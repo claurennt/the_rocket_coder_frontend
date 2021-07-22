@@ -10,6 +10,11 @@ import { ThemeProvider } from "@material-ui/core/styles/";
 import { ClientContext } from "graphql-hooks";
 import { client } from "./Client/GraphQLClient";
 
+import WeatherWidget from "./Components/WeatherWidget";
+import MainBody from "./Components/MainBody";
+// import CustomReactWeather from "./CustomReactWeather";
+
+
 import Tooltip from "@material-ui/core/Tooltip";
 import MainBody from "./Components/MainBody";
 import { withStyles } from "@material-ui/core/styles";
@@ -29,7 +34,9 @@ const ImgTooltip = withStyles((theme) => ({
   },
 }))(Tooltip);
 
+
 function App() {
+  const [weatherData, setWeatherData] = useState();
   const { picOfTheDay } = useNasaPicture();
   const [location, setLocation] = useState();
 
@@ -49,6 +56,25 @@ function App() {
     }
   }, [longitude, latitude]);
 
+  // const images = images.map((image) =>
+  useEffect(() => {
+    if (latitude && longitude) {
+      const iconUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=c97c5e5eec64ede6eb6cc5552280d0c3&units=metric`;
+      fetch(iconUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          setWeatherData({
+            icon: data.weather[0].icon,
+            city: data.name,
+            temperature: data.main.temp,
+          });
+          console.log(data);
+        });
+    }
+  }, [longitude, latitude]);
+
+
+
   return (
     <ThemeProvider theme={theme}>
       <div
@@ -66,6 +92,10 @@ function App() {
             : { backgroundColor: "black", height: "100vh" }
         }
       >
+
+        {weatherData && <WeatherWidget weatherData={weatherData} />}
+
+
         {picOfTheDay && (
           <Tooltip>
             <ImgTooltip
@@ -97,6 +127,7 @@ function App() {
             </ImgTooltip>
           </Tooltip>
         )}
+
         <ClientContext.Provider value={client}>
           {" "}
           <MainBody />
