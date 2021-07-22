@@ -66,7 +66,7 @@ export default function MainBody() {
     <>
       <ThemeProvider theme={theme}>
         <Box className={classes.box}>
-          <Box pt={40}>
+          <Box pt={20}>
             <Typography variant="h3">
               Good {momentOfTheDay} Rocket Coder!🚀
             </Typography>
