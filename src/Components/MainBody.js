@@ -68,7 +68,7 @@ export default function MainBody() {
         <Box className={classes.box}>
           <Box pt={20}>
             <Typography variant="h3">
-              Good {momentOfTheDay} Rocket Coder!🚀
+              Good {momentOfTheDay} Rocket Coder! 🚀
             </Typography>
             <Typography variant="h5">
               What are your main tasks for today?
