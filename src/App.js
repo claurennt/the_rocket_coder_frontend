@@ -7,12 +7,11 @@ import { ClientContext } from "graphql-hooks";
 import { client } from "./Client/GraphQLClient";
 
 import MainBody from "./Components/MainBody";
-import CustomReactWeather from "./CustomReactWeather";
 
 function App() {
   const { picOfTheDay } = useNasaPicture();
   const [location, setLocation] = useState();
-
+  console.log(picOfTheDay);
   const watch = true;
   const { latitude, longitude } = usePosition(watch);
 
@@ -28,7 +27,6 @@ function App() {
         });
     }
   }, [longitude, latitude]);
-  // const images = images.map((image) =>
 
   return (
     <>
@@ -37,7 +35,7 @@ function App() {
         style={
           picOfTheDay
             ? {
-                backgroundImage: `url( ${picOfTheDay})`,
+                backgroundImage: `url( ${picOfTheDay.imgUrl})`,
                 backgroundColor: "black",
                 backgroundPosition: "center",
                 backgroundSize: "cover",
