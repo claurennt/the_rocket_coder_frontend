@@ -4,7 +4,7 @@ import { usePosition } from "use-position";
 import useNasaPicture from "./useNasaPicture";
 
 import { ClientContext } from "graphql-hooks";
-import { client } from "./db/GraphQLClient";
+import { client } from "./Client/GraphQLClient";
 
 import MainBody from "./Components/MainBody";
 import CustomReactWeather from "./CustomReactWeather";
