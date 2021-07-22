@@ -15,24 +15,6 @@ function App() {
 
   const watch = true;
   const { latitude, longitude } = usePosition(watch);
-  const [backgroundImages, setBackgroundImages] = useState(null);
-
-  // 3. Create out useEffect function
-  useEffect(() => {
-    const getImage = () => {
-      fetch(
-        `https://api.nasa.gov/planetary/apod?api_key=${process.env.REACT_APP_NASA_KEY}&start_date=2021-05-08&end_date=2021-05-23`
-      )
-        .then((response) => response.json())
-        // 4. Setting *dogImage* to the image url that we received from the response above
-        .then((data) => {
-          console.log(data);
-          setBackgroundImages(data);
-        });
-    };
-    const interval = setInterval(() => getImage(), 5000);
-    return () => clearInterval(interval);
-  }, [backgroundImages]);
 
   useEffect(() => {
     if (latitude && longitude) {
@@ -48,7 +30,6 @@ function App() {
   }, [longitude, latitude]);
   // const images = images.map((image) =>
 
-  console.log(backgroundImages);
   return (
     <>
       <div
