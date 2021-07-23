@@ -5,7 +5,7 @@ import { css } from "@emotion/react";
 // styling material UI components
 const useStyles = makeStyles((theme) => ({
   box: {
-    height: "100vh",
+    maxHeight: "100",
 
     display: "flex",
     justifyContent: "center",
@@ -51,9 +51,8 @@ theme.typography.h5 = {
 theme.typography.subtitle1 = {
   color: "white",
   position: "relative",
-  marginLeft: "0 ",
-  marginRight: "0 ",
-  marginTop: "2rem",
+  alignSelf: "flex-end",
+  bottom: "1px",
   fontSize: "1rem",
   "@media (min-width:600px)": {
     fontSize: "1rem",
