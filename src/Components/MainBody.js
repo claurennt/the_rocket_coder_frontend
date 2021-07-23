@@ -63,7 +63,7 @@ export default function MainBody() {
   return (
     <>
       <Box className={classes.box}>
-        <Box style={{ justifyContent: "center" }} pt={25}>
+        <Box>
           <Typography variant="h3">
             Good {momentOfTheDay} Rocket Coder! 🚀
           </Typography>
