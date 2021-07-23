@@ -4,16 +4,15 @@ import { usePosition } from "use-position";
 import useNasaPicture from "./useNasaPicture";
 import { theme } from "./Components/MainBodyStyles";
 import Typography from "@material-ui/core/Typography";
-
+import SwipeableTemporaryDrawer from "./Components/SwipeableTemporaryDrawer";
 import Box from "@material-ui/core/Box";
 import { ThemeProvider } from "@material-ui/core/styles/";
 import { ClientContext } from "graphql-hooks";
 import { client } from "./Client/GraphQLClient";
 
 import WeatherWidget from "./Components/WeatherWidget";
-import MainBody from "./Components/MainBody";
-// import CustomReactWeather from "./CustomReactWeather";
 
+// import CustomReactWeather from "./CustomReactWeather";
 
 import Tooltip from "@material-ui/core/Tooltip";
 import MainBody from "./Components/MainBody";
@@ -33,7 +32,6 @@ const ImgTooltip = withStyles((theme) => ({
     border: "1px solid #dadde9",
   },
 }))(Tooltip);
-
 
 function App() {
   const [weatherData, setWeatherData] = useState();
@@ -73,8 +71,6 @@ function App() {
     }
   }, [longitude, latitude]);
 
-
-
   return (
     <ThemeProvider theme={theme}>
       <div
@@ -92,9 +88,7 @@ function App() {
             : { backgroundColor: "black", height: "100vh" }
         }
       >
-
         {weatherData && <WeatherWidget weatherData={weatherData} />}
-
 
         {picOfTheDay && (
           <Tooltip>
@@ -132,7 +126,8 @@ function App() {
           {" "}
           <MainBody />
         </ClientContext.Provider>
-      </div>
+      </div>{" "}
+      <SwipeableTemporaryDrawer />
     </ThemeProvider>
   );
 }
