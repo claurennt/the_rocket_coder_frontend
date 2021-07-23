@@ -6,6 +6,8 @@
 import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
+
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
@@ -25,7 +27,7 @@ import {
 const useStyles = makeStyles({
   list: {
     width: 200,
-    paddingTop: "60px",
+    paddingTop: "10px",
   },
 });
 
@@ -87,24 +89,10 @@ export default function SwipeableTemporaryDrawer() {
           </ListItem>
         ))}
       </List>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+
       <List>
         {["Credits"].map((text, index) => (
-          <ListItem button key={text}>
+          <ListItem button key={text} bottom="1px">
             <ListItemText secondary={text} />
           </ListItem>
         ))}

@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+
 import ReactAnimatedWeather from "react-animated-weather";
 const WeatherWidget = ({ weatherData }) => {
   const codeMapping = {
