@@ -91,7 +91,7 @@ const ToDo = () => {
         />
 
         <IconButton aria-label="add" type="submit">
-          <AddIcon style={{ color: "white" }} />
+          <AddIcon style={{ color: "white", cursor: "pointer" }} />
         </IconButton>
       </form>
       <Scrollbars

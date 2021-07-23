@@ -72,12 +72,14 @@ export default function Task({
         {/* <WhiteCheckbox checked={checked} name="checkedG" fontSize="small" /> */}
         <ListItemText primary={text} />{" "}
         <EditOutlinedIcon
+          style={{ cursor: "pointer" }}
           className={classes.icon}
           onClick={() => {
             editTask(id);
           }}
         />
         <DeleteOutlinedIcon
+          style={{ cursor: "pointer" }}
           className={classes.icon}
           onClick={() => deleteTask(id)}
         />
