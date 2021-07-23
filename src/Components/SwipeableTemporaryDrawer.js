@@ -14,7 +14,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import PublicIcon from "@material-ui/icons/Public";
 import MusicNoteIcon from "@material-ui/icons/MusicNote";
-
+import MenuIcon from "@material-ui/icons/Menu";
 import {
   AlienOutline,
   Telescope,
@@ -25,17 +25,14 @@ import {
 const useStyles = makeStyles({
   list: {
     width: 200,
-    paddingTop: "90px",
+    paddingTop: "60px",
   },
 });
 
 export default function SwipeableTemporaryDrawer() {
   const classes = useStyles();
   const [state, setState] = React.useState({
-    top: false,
     left: false,
-    bottom: false,
-    right: false,
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -81,11 +78,33 @@ export default function SwipeableTemporaryDrawer() {
       </List>
 
       <List>
-        {["Robo Coding Quiz", "Shortcuts"].map((text, index) => (
+        {["Robo Quiz", "Shortcuts"].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
               {index % 2 === 0 ? <RobotLoveOutline /> : <RocketLaunchOutline />}
             </ListItemIcon>
+            <ListItemText secondary={text} />
+          </ListItem>
+        ))}
+      </List>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <List>
+        {["Credits"].map((text, index) => (
+          <ListItem button key={text}>
             <ListItemText secondary={text} />
           </ListItem>
         ))}
@@ -106,8 +125,10 @@ export default function SwipeableTemporaryDrawer() {
           <Button
             onClick={toggleDrawer(anchor, true)}
             style={{ backgroundColor: "hsla(0, 0%, 0%, 0)", color: "white" }}
+            text={{ text: "click" }}
           >
-            {anchor}
+            <MenuIcon />
+            MENU
           </Button>
           <SwipeableDrawer
             anchor={anchor}
