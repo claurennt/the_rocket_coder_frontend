@@ -9,13 +9,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-
 import PublicIcon from "@material-ui/icons/Public";
 import MusicNoteIcon from "@material-ui/icons/MusicNote";
+
 import {
   AlienOutline,
   Telescope,
@@ -25,10 +24,8 @@ import {
 
 const useStyles = makeStyles({
   list: {
-    width: 250,
-  },
-  fullList: {
-    width: "auto",
+    width: 200,
+    paddingTop: "90px",
   },
 });
 
@@ -58,7 +55,7 @@ export default function SwipeableTemporaryDrawer() {
       className={clsx(classes.list, {
         [classes.fullList]: anchor === "top" || anchor === "bottom",
       })}
-      role="presentation"
+      role="none presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
@@ -68,7 +65,7 @@ export default function SwipeableTemporaryDrawer() {
             <ListItemIcon>
               {index % 2 === 0 ? <AlienOutline /> : <PublicIcon />}
             </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText secondary={text} />
           </ListItem>
         ))}
       </List>
@@ -78,18 +75,18 @@ export default function SwipeableTemporaryDrawer() {
             <ListItemIcon>
               {index % 2 === 0 ? <Telescope /> : <MusicNoteIcon />}
             </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText secondary={text} />
           </ListItem>
         ))}
       </List>
-      <Divider />
+
       <List>
         {["Robo Coding Quiz", "Shortcuts"].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
               {index % 2 === 0 ? <RobotLoveOutline /> : <RocketLaunchOutline />}
             </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText secondary={text} />
           </ListItem>
         ))}
       </List>
@@ -97,10 +94,21 @@ export default function SwipeableTemporaryDrawer() {
   );
 
   return (
-    <div>
+    <div
+      className="drawer"
+      style={{
+        backgroundColor: "hsla(0, 0%, 0%, 0)",
+        display: "inline",
+      }}
+    >
       {["left"].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+          <Button
+            onClick={toggleDrawer(anchor, true)}
+            style={{ backgroundColor: "hsla(0, 0%, 0%, 0)", color: "white" }}
+          >
+            {anchor}
+          </Button>
           <SwipeableDrawer
             anchor={anchor}
             open={state[anchor]}
