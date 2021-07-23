@@ -89,7 +89,7 @@ function App() {
         }
       >
         {weatherData && <WeatherWidget weatherData={weatherData} />}
-
+        <SwipeableTemporaryDrawer />
         {picOfTheDay && (
           <Tooltip>
             <ImgTooltip
@@ -127,7 +127,6 @@ function App() {
           <MainBody />
         </ClientContext.Provider>
       </div>{" "}
-      <SwipeableTemporaryDrawer />
     </ThemeProvider>
   );
 }
