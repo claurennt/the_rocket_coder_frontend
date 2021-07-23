@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-
+import Box from "@material-ui/core/Box";
 import ListItem from "@material-ui/core/ListItem";
 
 import ListItemText from "@material-ui/core/ListItemText";
@@ -16,19 +16,15 @@ import { useSpring, animated } from "react-spring";
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
-    width: "100%",
-
-    borderColor: theme.palette.background.paper,
+    width: "50%",
+    margin: "0 auto",
+    background: "#628395",
     color: "white",
     padding: "0px",
   },
   checkBox: {
     color: "white",
-    "&$checked": {
-      color: "white",
-    },
   },
-  icon: { marginRight: "2rem" },
 }));
 
 export default function Task({
@@ -56,21 +52,29 @@ export default function Task({
       <ListItem
         dense
         className={classes.listItem}
-        contentEditable={editing ? "true" : "false"}
         onBlur={(e) => onFinishEditing(e, id)}
       >
         {" "}
-        <Checkbox
-          className={classes.checkBox}
-          uncheckedIcon={
-            <CheckBoxOutlineBlankOutlinedIcon style={{ fill: "white" }} />
-          }
-          checkedIcon={<CheckBoxOutlinedIcon style={{ fill: "white" }} />}
-          label="Checkbox Label"
-          onClick={() => toggleCheck(id)}
-        />
+        {!checked ? (
+          <CheckBoxOutlineBlankOutlinedIcon
+            className={classes.checkBox}
+            onClick={() => toggleCheck(id)}
+            style={{ fill: "white" }}
+          />
+        ) : (
+          <CheckBoxOutlinedIcon
+            onClick={() => toggleCheck(id)}
+            className={classes.checkBox}
+            style={{ fill: "white" }}
+          />
+        )}
         {/* <WhiteCheckbox checked={checked} name="checkedG" fontSize="small" /> */}
-        <ListItemText primary={text} />{" "}
+        <ListItemText
+          contentEditable={editing ? "true" : "false"}
+          suppressContentEditableWarning={true}
+          primary={text}
+          style={{ marginLeft: "10px" }}
+        />{" "}
         <EditOutlinedIcon
           style={{ cursor: "pointer" }}
           className={classes.icon}

@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: "1px solid white",
     width: "50%",
   },
+  list: {
+    width: "60%",
+  },
 }));
 
 // styling MATERIAL ui typography elements
@@ -63,9 +66,25 @@ theme.typography.subtitle1 = {
   fontWeight: "300",
 };
 theme.typography.body1 = {
-  color: "red",
+  color: "white",
   padding: "15px",
   fontSize: "7rem",
+
+  "@media (min-width:600px)": {
+    fontSize: "0.75rem",
+  },
+  [theme.breakpoints.up("md")]: {
+    fontSize: "0.75rem",
+  },
+  fontWeight: "300",
+};
+theme.typography.body2 = {
+  color: "white",
+
+  fontSize: "7rem",
+  fontWeight: "600",
+  fontFamily: "Audiowide, cursive",
+
   "@media (min-width:600px)": {
     fontSize: "0.75rem",
   },
