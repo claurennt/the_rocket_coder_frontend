@@ -97,9 +97,9 @@ const ToDo = () => {
       <Scrollbars
         renderThumbVertical={renderThumb}
         style={{
-          maxHeight: "20%",
+          maxHeight: "40%",
           width: "auto",
-          marginTop: "1.5rem",
+          marginTop: "2.5rem",
         }}
       >
         <List>
