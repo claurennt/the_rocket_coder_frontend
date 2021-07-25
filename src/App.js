@@ -11,6 +11,8 @@ import { ClientContext } from "graphql-hooks";
 import { client } from "./Client/GraphQLClient";
 
 import WeatherWidget from "./Components/WeatherWidget";
+import React from "react";
+import ReactPlayer from "react-player";
 
 // import CustomReactWeather from "./CustomReactWeather";
 
@@ -88,8 +90,27 @@ function App() {
             : { backgroundColor: "black", height: "100vh" }
         }
       >
-        {weatherData && <WeatherWidget weatherData={weatherData} />}
-        <SwipeableTemporaryDrawer />
+        <div
+          className="wrapper"
+          style={{
+            dispaly: "flex",
+            marginTop: "0px",
+          }}
+        >
+          {weatherData && <WeatherWidget weatherData={weatherData} />}
+          <SwipeableTemporaryDrawer />
+          <div className="player-wrapper">
+            <ReactPlayer
+              className="react-player"
+              url="https://www.youtube.com/watch?v=tNkZsRW7h2c"
+              width="15%"
+              height="15%"
+              cursor="pointer"
+              controls="true"
+            />
+          </div>
+          {/* this is the package added for the music player https://github.com/CookPete/react-player */}
+        </div>
         {picOfTheDay && (
           <Tooltip>
             <ImgTooltip
@@ -121,7 +142,6 @@ function App() {
             </ImgTooltip>
           </Tooltip>
         )}
-
         <ClientContext.Provider value={client}>
           {" "}
           <MainBody />

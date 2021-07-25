@@ -4,6 +4,12 @@
   position: relative;
 }
 
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 100px;
+  align-items: center;
+}
 .App-container-weather {
   position: absolute;
   right: 0px;
