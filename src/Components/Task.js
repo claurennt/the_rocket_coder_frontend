@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import ListItem from "@material-ui/core/ListItem";
-
+import Typography from "@material-ui/core/Typography";
 import ListItemText from "@material-ui/core/ListItemText";
 // import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 auto",
     background: "#628395",
     color: "white",
-    padding: "0px",
+    padding: "4px",
   },
   checkBox: {
     color: "white",
@@ -72,7 +72,12 @@ export default function Task({
         <ListItemText
           contentEditable={editing ? "true" : "false"}
           suppressContentEditableWarning={true}
-          primary={text}
+          disableTypography
+          primary={
+            <Typography type="body1" style={{ color: "#FFFFFF" }}>
+              {text}
+            </Typography>
+          }
           style={{ marginLeft: "10px" }}
         />{" "}
         <EditOutlinedIcon
