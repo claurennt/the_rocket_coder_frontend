@@ -11,7 +11,9 @@ import { ClientContext } from "graphql-hooks";
 import { client } from "./Client/GraphQLClient";
 
 import WeatherWidget from "./Components/WeatherWidget";
-
+import React from "react";
+import ReactPlayer from "react-player";
+import MusicNoteOutlinedIcon from "@material-ui/icons/MusicNoteOutlined";
 // import CustomReactWeather from "./CustomReactWeather";
 
 import Tooltip from "@material-ui/core/Tooltip";
@@ -20,6 +22,11 @@ import { withStyles } from "@material-ui/core/styles";
 import PhotoCameraOutlinedIcon from "@material-ui/icons/PhotoCameraOutlined";
 import IconButton from "@material-ui/core/IconButton";
 
+import { makeStyles } from "@material-ui/core/styles";
+import Switch from "@material-ui/core/Switch";
+import Paper from "@material-ui/core/Paper";
+import Fade from "@material-ui/core/Fade";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 const ImgTooltip = withStyles((theme) => ({
   tooltip: {
     backgroundColor: "transparent",
@@ -32,6 +39,26 @@ const ImgTooltip = withStyles((theme) => ({
     border: "1px solid #dadde9",
   },
 }))(Tooltip);
+const useStyles = makeStyles((theme) => ({
+  root: {
+    height: 180,
+  },
+  container: {
+    display: "flex",
+  },
+  paper: {
+    margin: theme.spacing(1),
+  },
+  svg: {
+    width: 100,
+    height: 100,
+  },
+  polygon: {
+    fill: theme.palette.common.white,
+    stroke: theme.palette.divider,
+    strokeWidth: 1,
+  },
+}));
 
 function App() {
   const [weatherData, setWeatherData] = useState();
@@ -40,6 +67,12 @@ function App() {
 
   const watch = true;
   const { latitude, longitude } = usePosition(watch);
+  const classes = useStyles();
+  const [checked, setChecked] = React.useState(false);
+
+  const handleChange = () => {
+    setChecked((prev) => !prev);
+  };
 
   useEffect(() => {
     if (latitude && longitude) {
@@ -88,8 +121,19 @@ function App() {
             : { backgroundColor: "black", height: "100vh" }
         }
       >
-        {weatherData && <WeatherWidget weatherData={weatherData} />}
-        <SwipeableTemporaryDrawer />
+        <div
+          className="wrapper"
+          style={{
+            dispaly: "flex",
+            marginTop: "0px",
+          }}
+        >
+          {weatherData && <WeatherWidget weatherData={weatherData} />}
+
+          <SwipeableTemporaryDrawer />
+
+          {/* this is the package added for the music player https://github.com/CookPete/react-player */}
+        </div>
         {picOfTheDay && (
           <Tooltip>
             <ImgTooltip
@@ -121,11 +165,40 @@ function App() {
             </ImgTooltip>
           </Tooltip>
         )}
-
         <ClientContext.Provider value={client}>
           {" "}
           <MainBody />
         </ClientContext.Provider>
+        <FormControlLabel
+          style={{ position: "absolute", margin: "auto", left: 30, bottom: 0 }}
+          control={<Switch checked={checked} onChange={handleChange} />}
+        />
+        <IconButton
+          style={{
+            color: "white",
+            position: "absolute",
+            margin: "auto",
+            left: 0,
+            bottom: 0,
+          }}
+        >
+          <MusicNoteOutlinedIcon />
+        </IconButton>
+
+        <div className={classes.container}>
+          <Fade in={checked}>
+            <div className="player-wrapper">
+              <ReactPlayer
+                className="react-player"
+                url="https://www.youtube.com/watch?v=tNkZsRW7h2c"
+                width="15%"
+                height="15%"
+                cursor="pointer"
+                controls="true"
+              />
+            </div>
+          </Fade>
+        </div>
       </div>{" "}
     </ThemeProvider>
   );
