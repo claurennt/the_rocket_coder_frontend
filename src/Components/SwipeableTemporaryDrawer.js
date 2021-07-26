@@ -182,6 +182,17 @@ export default function SwipeableTemporaryDrawer() {
             </Link>
           ))}
         </List>
+        <List>
+          {["Credits"].map((text, index) => (
+            <Link to="/credits" className={classes.link}>
+              <ListItem button key={text}>
+                <ListItemText
+                  primary={<Typography variant="body2">{text}</Typography>}
+                />
+              </ListItem>
+            </Link>
+          ))}
+        </List>
       </div>
     </Router>
   );
