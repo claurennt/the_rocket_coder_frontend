@@ -79,10 +79,10 @@ theme.typography.body1 = {
   fontWeight: "300",
 };
 theme.typography.body2 = {
-  color: "white",
+  color: "black",
 
   fontSize: "7rem",
-  fontWeight: "600",
+
   fontFamily: "Audiowide, cursive",
 
   "@media (min-width:600px)": {
