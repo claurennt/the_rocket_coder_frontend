@@ -15,6 +15,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import PublicIcon from "@material-ui/icons/Public";
+
 // import MusicNoteIcon from "@material-ui/icons/MusicNote";
 import MenuIcon from "@material-ui/icons/Menu";
 import {
@@ -24,13 +25,7 @@ import {
   RocketLaunchOutline,
 } from "mdi-material-ui";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import AlienDebugger from "./SidebarComponents/AlienDebugger";
-import DiscoverEvents from "./SidebarComponents/DiscoverEvents";
-import FocusTimer from "./SidebarComponents/FocusTimer";
-import RoboCodingQuiz from "./SidebarComponents/RoboCodingQuiz";
-import Shortcuts from "./SidebarComponents/Shortcuts";
-import SpaceMusic from "./SidebarComponents/SpaceMusic";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -63,172 +58,130 @@ export default function SwipeableTemporaryDrawer() {
   };
 
   const list = (anchor) => (
-    <Router>
-      <div
-        className={clsx(classes.list, {
-          [classes.fullList]: anchor === "top" || anchor === "bottom",
-        })}
-        role="none presentation"
-        onClick={toggleDrawer(anchor, false)}
-        onKeyDown={toggleDrawer(anchor, false)}
-      >
-        <List className={classes.list}>
-          {/* {["Alien Debugger", "Focus Timer"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <AlienOutline /> : <PublicIcon />}
-            </ListItemIcon>
-            <ListItemText secondary={text} />
-          </ListItem>
+    <div
+      className={clsx(classes.list, {
+        [classes.fullList]: anchor === "top" || anchor === "bottom",
+      })}
+      role="none presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <List className={classes.list}>
+        {["Home"].map((text, index) => (
+          <Link to="/" className={classes.link}>
+            <ListItem button key={text}>
+              <ListItemIcon>
+                <AlienOutline />
+              </ListItemIcon>
+              <ListItemText
+                primary={<Typography variant="body2">{text}</Typography>}
+              />
+            </ListItem>
+          </Link>
+        ))}
+      </List>
+      <List className={classes.list}>
+        {["Alien Debugger"].map((text, index) => (
+          <Link to="/aliendebugger" className={classes.link}>
+            <ListItem button key={text}>
+              <ListItemIcon>
+                <AlienOutline />
+              </ListItemIcon>
+              <ListItemText
+                primary={<Typography variant="body2">{text}</Typography>}
+              />
+            </ListItem>
+          </Link>
         ))}
       </List>
       <List>
-        {["Discover Events", "Space Music"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <Telescope /> : <MusicNoteIcon />}
-            </ListItemIcon>
-            <ListItemText secondary={text} />
-          </ListItem>
+        {["Focus Timer"].map((text, index) => (
+          <Link to="/focustimer" className={classes.link}>
+            <ListItem button key={text}>
+              <ListItemIcon>
+                <PublicIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={<Typography variant="body2">{text}</Typography>}
+              />
+            </ListItem>
+          </Link>
+        ))}
+      </List>
+      <List>
+        {["Discover Events"].map((text, index) => (
+          <Link to="/discoverevents" className={classes.link}>
+            <ListItem button key={text}>
+              <ListItemIcon>
+                <Telescope />
+              </ListItemIcon>
+              <ListItemText
+                primary={<Typography variant="body2">{text}</Typography>}
+              />
+            </ListItem>
+          </Link>
         ))}
       </List>
 
       <List>
-        {["Robo Quiz", "Shortcuts"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <RobotLoveOutline /> : <RocketLaunchOutline />}
-            </ListItemIcon>
-            <ListItemText secondary={text} />
-          </ListItem>
+        {["Robo Coding Quiz"].map((text, index) => (
+          <Link to="/robocodingquiz" className={classes.link}>
+            <ListItem button key={text}>
+              <ListItemIcon>
+                <RobotLoveOutline />
+              </ListItemIcon>
+              <ListItemText
+                primary={<Typography variant="body2">{text}</Typography>}
+              />
+            </ListItem>
+          </Link>
         ))}
       </List>
-
       <List>
-        {["Credits"].map((text, index) => (
-          <ListItem button key={text} bottom="1px">
-            <ListItemText secondary={text} />
-          </ListItem>
+        {["Shortcuts"].map((text, index) => (
+          <Link to="/shortcuts" className={classes.link}>
+            <ListItem button key={text}>
+              <ListItemIcon>
+                <RocketLaunchOutline />
+              </ListItemIcon>
+              <ListItemText
+                primary={<Typography variant="body2">{text}</Typography>}
+              />
+            </ListItem>
+          </Link>
         ))}
-      </List> */}
-
-          {["Alien Debugger"].map((text, index) => (
-            <Link to="/aliendebugger" className={classes.link}>
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  <AlienOutline />
-                </ListItemIcon>
-                <ListItemText
-                  primary={<Typography variant="body2">{text}</Typography>}
-                />
-              </ListItem>
-            </Link>
-          ))}
-        </List>
-        <List>
-          {["Focus Timer"].map((text, index) => (
-            <Link to="/focustimer" className={classes.link}>
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  <PublicIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary={<Typography variant="body2">{text}</Typography>}
-                />
-              </ListItem>
-            </Link>
-          ))}
-        </List>
-        <List>
-          {["Discover Events"].map((text, index) => (
-            <Link to="/discoverevents" className={classes.link}>
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  <Telescope />
-                </ListItemIcon>
-                <ListItemText
-                  primary={<Typography variant="body2">{text}</Typography>}
-                />
-              </ListItem>
-            </Link>
-          ))}
-        </List>
-
-        <List>
-          {["Robo Coding Quiz"].map((text, index) => (
-            <Link to="/robocodingquiz" className={classes.link}>
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  <RobotLoveOutline />
-                </ListItemIcon>
-                <ListItemText
-                  primary={<Typography variant="body2">{text}</Typography>}
-                />
-              </ListItem>
-            </Link>
-          ))}
-        </List>
-        <List>
-          {["Shortcuts"].map((text, index) => (
-            <Link to="/shortcuts" className={classes.link}>
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  <RocketLaunchOutline />
-                </ListItemIcon>
-                <ListItemText
-                  primary={<Typography variant="body2">{text}</Typography>}
-                />
-              </ListItem>
-            </Link>
-          ))}
-        </List>
-      </div>
-    </Router>
+      </List>
+    </div>
   );
 
   return (
-    <div
-      className="drawer"
-      style={{
-        backgroundColor: "hsla(0, 0%, 0%, 0)",
-        display: "inline",
-      }}
-    >
-      <Router>
-        <div>
-          {["left"].map((anchor) => (
-            <React.Fragment key={anchor}>
-              <Button
-                onClick={toggleDrawer(anchor, true)}
-                style={{
-                  backgroundColor: "hsla(0, 0%, 0%, 0)",
-                  color: "white",
-                }}
-                text={{ text: "click" }}
-              >
-                <MenuIcon />
-                MENU
-              </Button>
-              <SwipeableDrawer
-                anchor={anchor}
-                open={state[anchor]}
-                onClose={toggleDrawer(anchor, false)}
-                onOpen={toggleDrawer(anchor, true)}
-              >
-                {list(anchor)}
-              </SwipeableDrawer>
-            </React.Fragment>
-          ))}
-          <Switch />
-          <Route path="/aliendebugger" component={AlienDebugger} />
-          <Route path="/discoverevents" component={DiscoverEvents} />
-          <Route path="/focustimer" component={FocusTimer} />
-          <Route path="/robocodingquiz" component={RoboCodingQuiz} />
-          <Route path="/shortcuts" component={Shortcuts} />
-          <Route path="/spacemusic" component={SpaceMusic} />
-          <Switch />
-        </div>
-      </Router>
-    </div>
+    <>
+      {["left"].map((anchor) => (
+        <React.Fragment key={anchor}>
+          <Button
+            onClick={toggleDrawer(anchor, true)}
+            style={{
+              position: "absolute",
+              margin: "auto",
+              left: 0,
+              top: 0,
+              color: "green",
+            }}
+            text={{ text: "click" }}
+          >
+            <MenuIcon />
+            MENU
+          </Button>
+          <SwipeableDrawer
+            anchor={anchor}
+            open={state[anchor]}
+            onClose={toggleDrawer(anchor, false)}
+            onOpen={toggleDrawer(anchor, true)}
+          >
+            {list(anchor)}
+          </SwipeableDrawer>
+        </React.Fragment>
+      ))}
+    </>
   );
 }
