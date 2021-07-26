@@ -24,12 +24,25 @@ import {
   RocketLaunchOutline,
 } from "mdi-material-ui";
 
-const useStyles = makeStyles({
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import AlienDebugger from "./SidebarComponents/AlienDebugger";
+import DiscoverEvents from "./SidebarComponents/DiscoverEvents";
+import FocusTimer from "./SidebarComponents/FocusTimer";
+import RoboCodingQuiz from "./SidebarComponents/RoboCodingQuiz";
+import Shortcuts from "./SidebarComponents/Shortcuts";
+import SpaceMusic from "./SidebarComponents/SpaceMusic";
+
+const useStyles = makeStyles((theme) => ({
   list: {
     width: 200,
     paddingTop: "10px",
   },
-});
+
+  link: {
+    textDecoration: "none",
+    color: theme.palette.text.primary,
+  },
+}));
 
 export default function SwipeableTemporaryDrawer() {
   const classes = useStyles();
@@ -50,16 +63,17 @@ export default function SwipeableTemporaryDrawer() {
   };
 
   const list = (anchor) => (
-    <div
-      className={clsx(classes.list, {
-        [classes.fullList]: anchor === "top" || anchor === "bottom",
-      })}
-      role="none presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
-    >
-      <List>
-        {["Alien Debugger", "Focus Timer"].map((text, index) => (
+    <Router>
+      <div
+        className={clsx(classes.list, {
+          [classes.fullList]: anchor === "top" || anchor === "bottom",
+        })}
+        role="none presentation"
+        onClick={toggleDrawer(anchor, false)}
+        onKeyDown={toggleDrawer(anchor, false)}
+      >
+        <List>
+          {/* {["Alien Debugger", "Focus Timer"].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
               {index % 2 === 0 ? <AlienOutline /> : <PublicIcon />}
@@ -96,8 +110,82 @@ export default function SwipeableTemporaryDrawer() {
             <ListItemText secondary={text} />
           </ListItem>
         ))}
-      </List>
-    </div>
+      </List> */}
+
+          {["Alien Debugger"].map((text, index) => (
+            <Link to="/aliendebugger" className={classes.link}>
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  <AlienOutline />
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            </Link>
+          ))}
+        </List>
+        <List>
+          {["Focus Timer"].map((text, index) => (
+            <Link to="/focustimer" className={classes.link}>
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  <PublicIcon />
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            </Link>
+          ))}
+        </List>
+        <List>
+          {["Discover Events"].map((text, index) => (
+            <Link to="/discoverevents" className={classes.link}>
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  <Telescope />
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            </Link>
+          ))}
+        </List>
+        <List>
+          {["Space Music"].map((text, index) => (
+            <Link to="/spacemusic" className={classes.link}>
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  <MusicNoteIcon />
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            </Link>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          {["Robo Coding Quiz"].map((text, index) => (
+            <Link to="/robocodingquiz" className={classes.link}>
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  <RobotLoveOutline />
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            </Link>
+          ))}
+        </List>
+        <List>
+          {["Shortcuts"].map((text, index) => (
+            <Link to="/shortcuts" className={classes.link}>
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  <RocketLaunchOutline />
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            </Link>
+          ))}
+        </List>
+      </div>
+    </Router>
   );
 
   return (
@@ -108,26 +196,41 @@ export default function SwipeableTemporaryDrawer() {
         display: "inline",
       }}
     >
-      {["left"].map((anchor) => (
-        <React.Fragment key={anchor}>
-          <Button
-            onClick={toggleDrawer(anchor, true)}
-            style={{ backgroundColor: "hsla(0, 0%, 0%, 0)", color: "white" }}
-            text={{ text: "click" }}
-          >
-            <MenuIcon />
-            MENU
-          </Button>
-          <SwipeableDrawer
-            anchor={anchor}
-            open={state[anchor]}
-            onClose={toggleDrawer(anchor, false)}
-            onOpen={toggleDrawer(anchor, true)}
-          >
-            {list(anchor)}
-          </SwipeableDrawer>
-        </React.Fragment>
-      ))}
+      <Router>
+        <div>
+          {["left"].map((anchor) => (
+            <React.Fragment key={anchor}>
+              <Button
+                onClick={toggleDrawer(anchor, true)}
+                style={{
+                  backgroundColor: "hsla(0, 0%, 0%, 0)",
+                  color: "white",
+                }}
+                text={{ text: "click" }}
+              >
+                <MenuIcon />
+                MENU
+              </Button>
+              <SwipeableDrawer
+                anchor={anchor}
+                open={state[anchor]}
+                onClose={toggleDrawer(anchor, false)}
+                onOpen={toggleDrawer(anchor, true)}
+              >
+                {list(anchor)}
+              </SwipeableDrawer>
+            </React.Fragment>
+          ))}
+          <Switch />
+          <Route path="/aliendebugger" component={AlienDebugger} />
+          <Route path="/discoverevents" component={DiscoverEvents} />
+          <Route path="/focustimer" component={FocusTimer} />
+          <Route path="/robocodingquiz" component={RoboCodingQuiz} />
+          <Route path="/shortcuts" component={Shortcuts} />
+          <Route path="/spacemusic" component={SpaceMusic} />
+          <Switch />
+        </div>
+      </Router>
     </div>
   );
 }
