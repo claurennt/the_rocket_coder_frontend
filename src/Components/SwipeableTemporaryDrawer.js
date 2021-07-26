@@ -6,8 +6,8 @@
 import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import { withStyles } from "@material-ui/core/styles";
-
+// import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
@@ -15,7 +15,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import PublicIcon from "@material-ui/icons/Public";
-import MusicNoteIcon from "@material-ui/icons/MusicNote";
+// import MusicNoteIcon from "@material-ui/icons/MusicNote";
 import MenuIcon from "@material-ui/icons/Menu";
 import {
   AlienOutline,
@@ -35,9 +35,9 @@ import SpaceMusic from "./SidebarComponents/SpaceMusic";
 const useStyles = makeStyles((theme) => ({
   list: {
     width: 200,
+
     paddingTop: "10px",
   },
-
   link: {
     textDecoration: "none",
     color: theme.palette.text.primary,
@@ -72,7 +72,7 @@ export default function SwipeableTemporaryDrawer() {
         onClick={toggleDrawer(anchor, false)}
         onKeyDown={toggleDrawer(anchor, false)}
       >
-        <List>
+        <List className={classes.list}>
           {/* {["Alien Debugger", "Focus Timer"].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
@@ -83,7 +83,7 @@ export default function SwipeableTemporaryDrawer() {
         ))}
       </List>
       <List>
-        {["Discover Events"].map((text, index) => (
+        {["Discover Events", "Space Music"].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
               {index % 2 === 0 ? <Telescope /> : <MusicNoteIcon />}
@@ -118,7 +118,9 @@ export default function SwipeableTemporaryDrawer() {
                 <ListItemIcon>
                   <AlienOutline />
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText
+                  primary={<Typography variant="body2">{text}</Typography>}
+                />
               </ListItem>
             </Link>
           ))}
@@ -130,7 +132,9 @@ export default function SwipeableTemporaryDrawer() {
                 <ListItemIcon>
                   <PublicIcon />
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText
+                  primary={<Typography variant="body2">{text}</Typography>}
+                />
               </ListItem>
             </Link>
           ))}
@@ -142,24 +146,14 @@ export default function SwipeableTemporaryDrawer() {
                 <ListItemIcon>
                   <Telescope />
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText
+                  primary={<Typography variant="body2">{text}</Typography>}
+                />
               </ListItem>
             </Link>
           ))}
         </List>
-        <List>
-          {["Space Music"].map((text, index) => (
-            <Link to="/spacemusic" className={classes.link}>
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  <MusicNoteIcon />
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            </Link>
-          ))}
-        </List>
-        <Divider />
+
         <List>
           {["Robo Coding Quiz"].map((text, index) => (
             <Link to="/robocodingquiz" className={classes.link}>
@@ -167,7 +161,9 @@ export default function SwipeableTemporaryDrawer() {
                 <ListItemIcon>
                   <RobotLoveOutline />
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText
+                  primary={<Typography variant="body2">{text}</Typography>}
+                />
               </ListItem>
             </Link>
           ))}
@@ -179,7 +175,9 @@ export default function SwipeableTemporaryDrawer() {
                 <ListItemIcon>
                   <RocketLaunchOutline />
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText
+                  primary={<Typography variant="body2">{text}</Typography>}
+                />
               </ListItem>
             </Link>
           ))}
