@@ -83,7 +83,7 @@ export default function SwipeableTemporaryDrawer() {
         ))}
       </List>
       <List>
-        {["Discover Events", "Space Music"].map((text, index) => (
+        {["Discover Events"].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
               {index % 2 === 0 ? <Telescope /> : <MusicNoteIcon />}

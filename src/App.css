@@ -3,7 +3,15 @@
   max-height: 100vh;
   position: relative;
 }
-
+/* .player-wrapper {
+  position: absolute;
+} */
+.react-player {
+  position: absolute;
+  bottom: 0;
+  left: 100px;
+  align-items: center;
+}
 .App-container-weather {
   position: absolute;
   right: 0px;

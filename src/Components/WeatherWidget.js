@@ -33,6 +33,7 @@ const WeatherWidget = ({ weatherData }) => {
             padding: "1px",
             outlineHeight: "10px",
             alignItems: "flex-end",
+            marginRight: "30px",
           }}
         >
           <div style={{ alignSelf: "center" }}>
