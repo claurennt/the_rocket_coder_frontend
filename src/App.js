@@ -135,35 +135,33 @@ function App() {
           {/* this is the package added for the music player https://github.com/CookPete/react-player */}
         </div>
         {picOfTheDay && (
-          <Tooltip>
-            <ImgTooltip
-              title={
-                <>
-                  <Typography color="inherit">
-                    <strong>title</strong>:{picOfTheDay.imgTitle}
-                    <br />
-                    <strong>copyright:</strong> {picOfTheDay.imgCopyright}
-                  </Typography>
-                </>
-              }
+          <ImgTooltip
+            title={
+              <>
+                <Typography color="inherit">
+                  <strong>title</strong>:{picOfTheDay.imgTitle}
+                  <br />
+                  <strong>copyright:</strong> {picOfTheDay.imgCopyright}
+                </Typography>
+              </>
+            }
+          >
+            <Box
+              style={{
+                position: "absolute",
+                margin: "auto",
+                right: 0,
+                bottom: 0,
+              }}
             >
-              <Box
-                style={{
-                  position: "absolute",
-                  margin: "auto",
-                  right: 0,
-                  bottom: 0,
-                }}
+              <IconButton
+                style={{ color: "white" }}
+                aria-label="display image info"
               >
-                <IconButton
-                  style={{ color: "white" }}
-                  aria-label="display image info"
-                >
-                  <PhotoCameraOutlinedIcon />
-                </IconButton>
-              </Box>
-            </ImgTooltip>
-          </Tooltip>
+                <PhotoCameraOutlinedIcon />
+              </IconButton>
+            </Box>
+          </ImgTooltip>
         )}
         <ClientContext.Provider value={client}>
           {" "}
