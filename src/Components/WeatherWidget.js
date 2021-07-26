@@ -1,7 +1,9 @@
 import React from "react";
 
 import ReactAnimatedWeather from "react-animated-weather";
-const WeatherWidget = ({ weatherData }) => {
+
+export default function WeatherWidget({ weatherData }) {
+  console.log(weatherData);
   const codeMapping = {
     "01d": "CLEAR_DAY",
     "01n": "CLEAR_NIGHT",
@@ -22,7 +24,7 @@ const WeatherWidget = ({ weatherData }) => {
     "50d": "FOG",
     "50n": "FOG",
   };
-
+  console.log(weatherData.icon);
   return (
     <>
       <div className="App-container-weather">
@@ -58,6 +60,4 @@ const WeatherWidget = ({ weatherData }) => {
       </div>
     </>
   );
-};
-
-export default WeatherWidget;
+}
