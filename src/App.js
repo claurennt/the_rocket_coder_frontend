@@ -86,6 +86,7 @@ function App() {
             weatherData={weatherData}
             checked={checked}
             handleChangeMusic={handleChangeMusic}
+            location={location}
           />
         </Route>
       </Switch>
