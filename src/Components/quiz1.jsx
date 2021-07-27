@@ -1,4 +1,4 @@
-export const quiz = {
+export const quiz1 = {
   quizTitle: "Welcome to the RoboQuiz",
   quizSynopsis:
     "This quiz is designed for you to refresh your coding skills and help you on your journey to becoming a Rocket Coder 🚀",
@@ -6,8 +6,7 @@ export const quiz = {
     {
       question:
         "How can you access the state of a component from inside of a member function?",
-      questionType: "text",
-       // if you need to display Picture in Question
+      questionType: "text",// if you need to display Picture in Question
       answerSelectionType: "single",
       answers: [
         "this.getState()",
@@ -62,7 +61,6 @@ export const quiz = {
         "React doesn't actually attach event handlers to the nodes themselves. When React starts up, it starts listening for all events at the top level using a single event listener",
       point: "20",
     },
-   
     {
       question: "What are the advantages of React JS?",
       questionType: "text",
