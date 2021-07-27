@@ -15,7 +15,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import PublicIcon from "@material-ui/icons/Public";
-
+import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 // import MusicNoteIcon from "@material-ui/icons/MusicNote";
 import MenuIcon from "@material-ui/icons/Menu";
 import {
@@ -71,7 +71,7 @@ export default function SwipeableTemporaryDrawer() {
           <Link to="/" className={classes.link} key={text}>
             <ListItem button>
               <ListItemIcon>
-                <AlienOutline />
+                <HomeOutlinedIcon />
               </ListItemIcon>
               <ListItemText
                 primary={<Typography variant="body2">{text}</Typography>}
@@ -144,6 +144,17 @@ export default function SwipeableTemporaryDrawer() {
               <ListItemIcon>
                 <RocketLaunchOutline />
               </ListItemIcon>
+              <ListItemText
+                primary={<Typography variant="body2">{text}</Typography>}
+              />
+            </ListItem>
+          </Link>
+        ))}
+      </List>
+      <List>
+        {["Credits"].map((text, index) => (
+          <Link to="/shortcuts" className={classes.link}>
+            <ListItem button key={text}>
               <ListItemText
                 primary={<Typography variant="body2">{text}</Typography>}
               />

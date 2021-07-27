@@ -55,13 +55,6 @@ export default function RoboCodingQuiz() {
       }}
     >
       <div>
-        <Button
-          className={classes.button}
-          onClick={handleOpen}
-          style={{ marginLeft: "200px" }}
-        >
-          Open the select
-        </Button>
         <FormControl
           className={classes.formControl}
           style={{ marginLeft: "200px" }}
