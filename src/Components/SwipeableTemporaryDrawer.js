@@ -68,8 +68,8 @@ export default function SwipeableTemporaryDrawer() {
     >
       <List className={classes.list}>
         {["Home"].map((text, index) => (
-          <Link to="/" className={classes.link}>
-            <ListItem button key={text}>
+          <Link to="/" className={classes.link} key={text}>
+            <ListItem button>
               <ListItemIcon>
                 <AlienOutline />
               </ListItemIcon>
@@ -82,8 +82,8 @@ export default function SwipeableTemporaryDrawer() {
       </List>
       <List className={classes.list}>
         {["Alien Debugger"].map((text, index) => (
-          <Link to="/aliendebugger" className={classes.link}>
-            <ListItem button key={text}>
+          <Link to="/aliendebugger" className={classes.link} key={text}>
+            <ListItem button>
               <ListItemIcon>
                 <AlienOutline />
               </ListItemIcon>
@@ -96,8 +96,8 @@ export default function SwipeableTemporaryDrawer() {
       </List>
       <List>
         {["Focus Timer"].map((text, index) => (
-          <Link to="/focustimer" className={classes.link}>
-            <ListItem button key={text}>
+          <Link to="/focustimer" className={classes.link} key={text}>
+            <ListItem button>
               <ListItemIcon>
                 <PublicIcon />
               </ListItemIcon>
@@ -110,8 +110,8 @@ export default function SwipeableTemporaryDrawer() {
       </List>
       <List>
         {["Discover Events"].map((text, index) => (
-          <Link to="/discoverevents" className={classes.link}>
-            <ListItem button key={text}>
+          <Link to="/discoverevents" className={classes.link} key={text}>
+            <ListItem button>
               <ListItemIcon>
                 <Telescope />
               </ListItemIcon>
@@ -125,7 +125,7 @@ export default function SwipeableTemporaryDrawer() {
 
       <List>
         {["Robo Coding Quiz"].map((text, index) => (
-          <Link to="/robocodingquiz" className={classes.link}>
+          <Link to="/robocodingquiz" className={classes.link} key={text}>
             <ListItem button key={text}>
               <ListItemIcon>
                 <RobotLoveOutline />
@@ -139,7 +139,7 @@ export default function SwipeableTemporaryDrawer() {
       </List>
       <List>
         {["Shortcuts"].map((text, index) => (
-          <Link to="/shortcuts" className={classes.link}>
+          <Link to="/shortcuts" className={classes.link} key={text}>
             <ListItem button key={text}>
               <ListItemIcon>
                 <RocketLaunchOutline />
@@ -152,8 +152,6 @@ export default function SwipeableTemporaryDrawer() {
         ))}
       </List>
     </div>
-
-
   );
 
   return (
