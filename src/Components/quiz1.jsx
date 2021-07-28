@@ -1,7 +1,18 @@
 export const quiz1 = {
-  quizTitle: "Welcome to the RoboQuiz",
-  quizSynopsis:
-    "This quiz is designed for you to refresh your coding skills and help you on your journey to becoming a Rocket Coder 🚀",
+   appLocale: {
+    landingHeaderText: "Questions",
+    question: "Question",
+  
+    startQuizBtn: "Start Quiz",
+    resultFilterAll: "All",
+    resultFilterCorrect: "Correct",
+    resultFilterIncorrect: "Incorrect",
+    nextQuestionBtn: "Next",
+    resultPageHeaderText: "You have completed the quiz. You got <correctIndexLength> out of <questionLength> questions."},
+    
+  // quizTitle: "Welcome to the RoboQuiz",
+  // quizSynopsis:
+  //   "This quiz is designed for you to refresh your coding skills and help you on your journey to becoming a Rocket Coder 🚀",
   questions: [
     {
       question:
@@ -160,6 +171,87 @@ export const quiz1 = {
       messageForCorrectAnswer: "Correct answer. Good job.",
       messageForIncorrectAnswer: "Incorrect answer.",
       explanation:"Elements are the smallest building blocks of React apps. An element describes what you want to see on the screen: const element = <h1>Hello, world</h1>; Unlike browser DOM elements, React elements are plain objects, and are cheap to create.",
+      point: "20",
+    },
+     {
+      question:
+        "React keeps track of what items have changed, been added, or been removed from a list using ________.",
+      questionType: "text",
+       // if you need to display Picture in Question
+      answerSelectionType: "single",
+      answers: [
+        "state",
+        "props",
+        "keys",
+        "ref",
+      ],
+      correctAnswer: "3",
+      messageForCorrectAnswer: "Correct answer. Good job.",
+      messageForIncorrectAnswer: "Incorrect answer.",
+      point: "20",
+    },
+        {
+      question: "State can be initialized when code is loaded or state can be set on event changes.",
+      questionType: "text",
+      answerSelectionType: "single",
+      answers: ["True", "False"],
+      correctAnswer: "1",
+      messageForCorrectAnswer: "Correct answer. Good job.",
+      messageForIncorrectAnswer: "Incorrect answer. ",
+      point: "20",
+    },
+        {
+      question:
+        "Which one of the following is an ternary operator:",
+      questionType: "text",
+       // if you need to display Picture in Question
+      answerSelectionType: "single",
+      answers: [
+        "?",
+        ":",
+        "-",
+        "+",
+      ],
+      correctAnswer: "1",
+      messageForCorrectAnswer: "Correct answer. Good job.",
+      messageForIncorrectAnswer: "Incorrect answer.",
+      explanation:"In JavaScript, only one ternary operator is supported, known as the conditional operator, which combines three different expressions into one expression. However, the conditional operator can also be used in place of the (if else) statements as well.",
+      point: "20",
+    },
+        {
+      question:
+        "Which one of the following is known as the Equality operator, which is used to check whether the two values are equal or not:",
+      questionType: "text",
+       // if you need to display Picture in Question
+      answerSelectionType: "single",
+      answers: [
+        "=",
+        "===",
+        "==",
+        "&&",
+      ],
+      correctAnswer: "3",
+      messageForCorrectAnswer: "Correct answer. Good job.",
+      messageForIncorrectAnswer: "Incorrect answer.",
+      explanation:"The "==" called the equality operators, it returns true if both the value are equal otherwise it returns false.",
+      point: "20",
+    },
+        {
+      question:
+        "What are the three important manipulations for a loop on a loop variable?",
+      questionType: "text",
+       // if you need to display Picture in Question
+      answerSelectionType: "single",
+      answers: [
+        "Updation, Incrementation, Initialization",
+        "Initialization, Testing, Incrementation",
+        "Testing, Updation, Testing",
+        "Initialization, Testing, Updation",
+      ],
+      correctAnswer: "4",
+      messageForCorrectAnswer: "Correct answer. Good job.",
+      messageForIncorrectAnswer: "Incorrect answer.",
+      explanation:"In the For loop statement, the Initialization, Testing, and Updating(and in the same order) are the most significant manipulations. First of all, the Initialization of the variable is done, then the condition gets tested, and after executing the code written in between curly braces, variable's value gets incremented.",
       point: "20",
     },
   ],

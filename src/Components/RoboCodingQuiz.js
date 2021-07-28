@@ -1,6 +1,6 @@
 import React from "react";
 import Quiz from "react-quiz-component";
-import { quiz } from "./quiz";
+import { quiz1 } from "./quiz1";
 import Robot from "./Robot.jpeg";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -8,7 +8,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -25,14 +24,19 @@ const onCompleteAction = (obj) => {
   // YOUR LOGIC GOES HERE
 };
 export default function RoboCodingQuiz() {
-  const { questions } = quiz;
-  console.log(questions);
   const classes = useStyles();
-  const [question, setQuestions] = React.useState();
+  const [quiz, setQuiz] = React.useState(quiz1);
   const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(5);
 
-  const handleChange = (event) => {
-    setQuestions(event.target.value);
+  const handleChange = (e) => {
+    quiz1["landingHeaderText"] = `${e.target.value} Questions`;
+    setValue(e.target.value);
+    const test = Object.assign({}, quiz["questions"].slice(0, e.target.value));
+    console.log(quiz1);
+    console.log(test);
+    setQuiz(test);
+    console.log(quiz);
   };
 
   const handleClose = () => {
@@ -68,8 +72,9 @@ export default function RoboCodingQuiz() {
             open={open}
             onClose={handleClose}
             onOpen={handleOpen}
-            value={question}
+            value={value}
             onChange={handleChange}
+            name="select"
           >
             <MenuItem value={5}>Five</MenuItem>
             <MenuItem value={10}>Ten</MenuItem>
@@ -84,14 +89,15 @@ export default function RoboCodingQuiz() {
           marginTop: "0px",
         }}
       >
-        {/* {for (let = 1; i<questions.lenght)} */}
-        <Quiz
-          quiz={quiz}
-          shuffle={true}
-          showDefaultResult={true}
-          onComplete={onCompleteAction}
-          showInstantFeedback={true}
-        />
+        {quiz && (
+          <Quiz
+            quiz={quiz}
+            shuffle={true}
+            showDefaultResult={true}
+            onComplete={onCompleteAction}
+            showInstantFeedback={true}
+          />
+        )}
       </div>
     </div>
   );
