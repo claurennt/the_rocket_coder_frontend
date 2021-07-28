@@ -12,8 +12,16 @@ import Box from "@material-ui/core/Box";
 import ReactHowler from "react-howler";
 import Snackbar from "@material-ui/core/Snackbar";
 import Switch from "@material-ui/core/Switch";
+import MicOffOutlinedIcon from "@material-ui/icons/MicOffOutlined";
 import { withStyles } from "@material-ui/core/styles";
-import SpeechSynthesis from "./SpeechSynthetis";
+
+import RotateLeftOutlinedIcon from "@material-ui/icons/RotateLeftOutlined";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
+
+import MicNoneOutlinedIcon from "@material-ui/icons/MicNoneOutlined";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles({
   root: {
@@ -73,10 +81,21 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
   const classes = useStyles();
   const [firstDialogue, setFirstDialogue] = useState(true);
   const [secondDialogue, setSecondDialogue] = useState(false);
-  // const [thirdDialogue, setThirdDialogue] = useState(false);
+  const [mic, setMic] = useState(false);
 
   const [openSnack, setOpenSnack] = useState(false);
   const [mute, setMute] = useState(false);
+
+  const {
+    transcript,
+
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition();
+
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Browser doesn't support speech recognition.</span>;
+  }
 
   const handleClose = () => {
     setOpenSnack(false);
@@ -84,7 +103,7 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
       setSecondDialogue(true);
     }, 1000);
   };
-
+  console.log(transcript);
   return (
     <React.Fragment>
       <ReactHowler
@@ -94,7 +113,7 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
         loop={true}
         volume={0.5}
       />
-      <SpeechSynthesis />
+      {/* <SpeechSynthesis /> */}
       <Box style={{ backgroundColor: "black" }}>
         <Container className={classes.root}>
           <Box
@@ -152,9 +171,10 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
             {secondDialogue && (
               <>
                 <Typist
-                  onTypingDone={() => setMute(false)}
-                  // setThirdDialogue(true);
-
+                  onTypingDone={() => {
+                    setMute(true);
+                    setMic(true);
+                  }}
                   className={classes.text}
                   cursor={{ element: "" }}
                 >
@@ -165,10 +185,24 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
                     </p>
                   </div>
                 </Typist>
-                <Typist.Delay ms={1000} />
-                <div>
-                  <SpeechSynthesis />
-                </div>
+              </>
+            )}
+            {mic && (
+              <>
+                {/* <ClickAwayListener
+                    onClickAway={SpeechRecognition.stopListening}
+                  > */}
+                <Button onClick={SpeechRecognition.startListening}>
+                  <MicNoneOutlinedIcon />
+                </Button>
+                <Button onClick={SpeechRecognition.stopListening}>
+                  <MicOffOutlinedIcon />
+                </Button>
+                <Button onClick={resetTranscript}>
+                  <RotateLeftOutlinedIcon />
+                </Button>
+                <p className={classes.text}>{transcript}</p>
+                {/* </ClickAwayListener> */}
               </>
             )}
           </Box>
