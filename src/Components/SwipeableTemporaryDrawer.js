@@ -176,7 +176,7 @@ export default function SwipeableTemporaryDrawer() {
               margin: "auto",
               left: 0,
               top: 0,
-              color: "green",
+              color: "#00FF41",
             }}
             text={{ text: "click" }}
           >

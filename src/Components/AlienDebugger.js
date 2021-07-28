@@ -11,6 +11,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import ReactHowler from "react-howler";
 import Snackbar from "@material-ui/core/Snackbar";
+import Switch from "@material-ui/core/Switch";
+import { withStyles } from "@material-ui/core/styles";
+import SpeechSynthesis from "./SpeechSynthetis";
 
 const useStyles = makeStyles({
   root: {
@@ -27,26 +30,71 @@ const useStyles = makeStyles({
   snack: { barContent: { maxWidth: 3 } },
 });
 
-export default function AlienDebugger() {
+const AntSwitch = withStyles((theme) => ({
+  root: {
+    position: "absolute",
+
+    margin: "auto",
+    right: 22,
+    top: 22,
+    width: 28,
+    height: 16,
+    padding: 0,
+    display: "flex",
+  },
+  switchBase: {
+    padding: 2,
+    color: theme.palette.grey[500],
+    "&$checked": {
+      transform: "translateX(12px)",
+      color: theme.palette.common.white,
+      "& + $track": {
+        opacity: 1,
+        backgroundColor: theme.palette.primary.main,
+        borderColor: theme.palette.primary.main,
+      },
+    },
+  },
+  thumb: {
+    width: 12,
+    height: 12,
+    boxShadow: "none",
+  },
+  track: {
+    border: `1px solid ${theme.palette.grey[500]}`,
+    borderRadius: 16 / 2,
+    opacity: 1,
+    backgroundColor: theme.palette.common.white,
+  },
+  checked: true,
+}))(Switch);
+
+export default function AlienDebugger({ checked, handleChangeMusic }) {
   const classes = useStyles();
   const [firstDialogue, setFirstDialogue] = useState(true);
   const [secondDialogue, setSecondDialogue] = useState(false);
   // const [thirdDialogue, setThirdDialogue] = useState(false);
 
   const [openSnack, setOpenSnack] = useState(false);
+  const [mute, setMute] = useState(false);
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
+  const handleClose = () => {
     setOpenSnack(false);
-    setSecondDialogue(false);
+    setTimeout(() => {
+      setSecondDialogue(true);
+    }, 1000);
   };
 
   return (
     <React.Fragment>
-      <ReactHowler src={`${AlienSound}`} playing={true} />
+      <ReactHowler
+        src={`${AlienSound}`}
+        playing={true}
+        mute={mute}
+        loop={true}
+        volume={0.5}
+      />
+      <SpeechSynthesis />
       <Box style={{ backgroundColor: "black" }}>
         <Container className={classes.root}>
           <Box
@@ -58,7 +106,10 @@ export default function AlienDebugger() {
             {firstDialogue && (
               <Typist
                 onTypingDone={() => {
-                  setFirstDialogue(false);
+                  setTimeout(() => {
+                    setFirstDialogue(false);
+                  }, 2000);
+
                   setTimeout(() => {
                     setOpenSnack(true);
                   }, 5000);
@@ -66,6 +117,7 @@ export default function AlienDebugger() {
                 className={classes.text}
                 cursor={{ element: "" }}
               >
+                <Typist.Delay ms={2000} />
                 <p>Hi there, I am your alien debugger.. </p>
                 <p>Explain to me your code line by line...</p>
                 <p>
@@ -83,7 +135,6 @@ export default function AlienDebugger() {
                     horizontal: "right",
                   }}
                   open={openSnack}
-                  autoHideDuration={6000}
                   onClose={handleClose}
                 >
                   <SnackbarContent
@@ -99,20 +150,26 @@ export default function AlienDebugger() {
             {/* )} */}
 
             {secondDialogue && (
-              <Typist
-                onTypingDone={() => {
-                  setSecondDialogue(false);
+              <>
+                <Typist
+                  onTypingDone={() => setMute(false)}
                   // setThirdDialogue(true);
-                }}
-                className={classes.text}
-                cursor={{ element: "" }}
-              >
-                <p></p>
-                <p>
-                  {" "}
-                  I will use my extraterrestrial powers to help unstuck you...{" "}
-                </p>
-              </Typist>
+
+                  className={classes.text}
+                  cursor={{ element: "" }}
+                >
+                  <div>
+                    <p>
+                      I will use my extraterrestrial powers to help unstuck
+                      you...{" "}
+                    </p>
+                  </div>
+                </Typist>
+                <Typist.Delay ms={1000} />
+                <div>
+                  <SpeechSynthesis />
+                </div>
+              </>
             )}
           </Box>
 
@@ -127,6 +184,12 @@ export default function AlienDebugger() {
             }}
           />
         </Container>
+
+        <AntSwitch
+          checked={!mute}
+          onChange={() => setMute(!mute)}
+          name="muteMusic"
+        />
       </Box>
     </React.Fragment>
   );
