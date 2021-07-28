@@ -25,7 +25,7 @@ function App() {
   const watch = true;
   const { latitude, longitude } = usePosition(watch);
 
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = useState(false);
 
   const handleChangeMusic = () => {
     setChecked((prev) => !prev);
@@ -66,7 +66,10 @@ function App() {
       <SwipeableTemporaryDrawer />
       <Switch>
         <Route path="/aliendebugger">
-          <AlienDebugger />
+          <AlienDebugger
+            checked={checked}
+            handleChangeMusic={handleChangeMusic}
+          />
         </Route>
         <Route path="/discoverevents">
           <DiscoverEvents />
