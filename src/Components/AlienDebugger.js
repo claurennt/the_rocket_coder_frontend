@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
-import { useState } from "react";
+import axios from "axios";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import Alien from "./Alien.gif";
@@ -14,8 +14,10 @@ import Snackbar from "@material-ui/core/Snackbar";
 import Switch from "@material-ui/core/Switch";
 import MicOffOutlinedIcon from "@material-ui/icons/MicOffOutlined";
 import { withStyles } from "@material-ui/core/styles";
-
+import GoogleLinks from "./GoogleLinks.js";
 import RotateLeftOutlinedIcon from "@material-ui/icons/RotateLeftOutlined";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import Loader from "react-loader-spinner";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
@@ -78,20 +80,17 @@ const AntSwitch = withStyles((theme) => ({
 }))(Switch);
 
 export default function AlienDebugger({ checked, handleChangeMusic }) {
+  const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
+    useSpeechRecognition();
   const classes = useStyles();
   const [firstDialogue, setFirstDialogue] = useState(true);
   const [secondDialogue, setSecondDialogue] = useState(false);
   const [mic, setMic] = useState(false);
-
+  const [isFetching, setIsFetching] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [openSnack, setOpenSnack] = useState(false);
   const [mute, setMute] = useState(false);
-
-  const {
-    transcript,
-
-    resetTranscript,
-    browserSupportsSpeechRecognition,
-  } = useSpeechRecognition();
+  const [googleLinks, setGoogleLinks] = useState();
 
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
@@ -103,7 +102,32 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
       setSecondDialogue(true);
     }, 1000);
   };
-  console.log(transcript);
+
+  const handlePostRequest = () => {
+    SpeechRecognition.stopListening();
+    axios
+      .post(
+        "https://rocket-coder-backend.herokuapp.com/googlethis" /*http://localhost:3001/googlethis*/,
+        { transcript: transcript }
+      )
+      .then((res) => {
+        setIsFetching(true);
+        setMic(false);
+        console.log(res);
+
+        if (res.status === 400) {
+          alert("Alien could not detect audio");
+        } else {
+          setGoogleLinks(res.data);
+          setIsFetching(false);
+        }
+      })
+      .catch((error) => {
+        console.log("Could not help you");
+        console.log(error.message);
+      });
+  };
+
   return (
     <React.Fragment>
       <ReactHowler
@@ -113,7 +137,16 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
         loop={true}
         volume={0.5}
       />
-      {/* <SpeechSynthesis /> */}
+      {isFetching && (
+        <Loader
+          type="Rings"
+          color="#00BFFF"
+          height={100}
+          width={100}
+          timeout={3000} //3 secs
+        />
+      )}
+
       <Box style={{ backgroundColor: "black" }}>
         <Container className={classes.root}>
           <Box
@@ -128,7 +161,6 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
                   setTimeout(() => {
                     setFirstDialogue(false);
                   }, 2000);
-
                   setTimeout(() => {
                     setOpenSnack(true);
                   }, 5000);
@@ -161,19 +193,21 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
                       backgroundColor: "#BDFFF3",
                       color: "#5B217F",
                     }}
-                    message={"Still Stuck? Click on me."}
+                    message={"Still stuck? Click me.->"}
                   />
                 </Snackbar>
               </ClickAwayListener>
             </>
-            {/* )} */}
 
             {secondDialogue && (
               <>
                 <Typist
                   onTypingDone={() => {
+                    setTimeout(() => {
+                      setSecondDialogue(false);
+                      setMic(true);
+                    }, 2000);
                     setMute(true);
-                    setMic(true);
                   }}
                   className={classes.text}
                   cursor={{ element: "" }}
@@ -189,22 +223,21 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
             )}
             {mic && (
               <>
-                {/* <ClickAwayListener
-                    onClickAway={SpeechRecognition.stopListening}
-                  > */}
-                <Button onClick={SpeechRecognition.startListening}>
-                  <MicNoneOutlinedIcon />
-                </Button>
-                <Button onClick={SpeechRecognition.stopListening}>
-                  <MicOffOutlinedIcon />
-                </Button>
-                <Button onClick={resetTranscript}>
-                  <RotateLeftOutlinedIcon />
-                </Button>
-                <p className={classes.text}>{transcript}</p>
-                {/* </ClickAwayListener> */}
+                <Box display="flex" flexDirection="row">
+                  <Button onClick={SpeechRecognition.startListening}>
+                    <MicNoneOutlinedIcon />
+                  </Button>
+                  <Button onClick={() => handlePostRequest()}>
+                    <MicOffOutlinedIcon />
+                  </Button>
+                  <Button onClick={resetTranscript}>
+                    <RotateLeftOutlinedIcon />
+                  </Button>
+                  <p className={classes.text}>{transcript}</p>
+                </Box>
               </>
             )}
+            {googleLinks && <GoogleLinks googleLinks={googleLinks} />}
           </Box>
 
           <Typography
