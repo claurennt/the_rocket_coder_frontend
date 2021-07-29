@@ -22,8 +22,8 @@ function App() {
   const [location, setLocation] = useState();
   // const l = useLocation();
   // console.log(l);
-  const watch = true;
-  const { latitude, longitude } = usePosition(watch);
+
+  const { latitude, longitude } = usePosition();
 
   const [checked, setChecked] = useState(false);
 
@@ -31,18 +31,18 @@ function App() {
     setChecked((prev) => !prev);
   };
 
-  useEffect(() => {
-    if (latitude && longitude) {
-      const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`;
+  // useEffect(() => {
+  //   if (latitude && longitude) {
+  //     const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`;
 
-      fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-          setLocation(data);
-          console.log({ data });
-        });
-    }
-  }, [longitude, latitude]);
+  //     fetch(url)
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         setLocation(data);
+  //         console.log({ data });
+  //       });
+  //   }
+  // }, [longitude, latitude]);
 
   // const images = images.map((image) =>
   useEffect(() => {
@@ -55,6 +55,8 @@ function App() {
             icon: data.weather[0].icon,
             city: data.name,
             temperature: data.main.temp,
+            latitude: data.coord.lat,
+            longitude: data.coord.lon,
           });
           console.log(data);
         });
@@ -75,7 +77,7 @@ function App() {
           <DiscoverEvents />
         </Route>
         <Route path="/focustimer/">
-          <FocusTimer />
+          <FocusTimer weatherData={weatherData} />
         </Route>
         <Route path="/robocodingquiz/">
           <RoboCodingQuiz />
