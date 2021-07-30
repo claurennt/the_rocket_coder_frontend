@@ -1,9 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Switch from "@material-ui/core/Switch";
 
-import Fade from "@material-ui/core/Fade";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Grow from "@material-ui/core/Grow";
+
+import Link from "@material-ui/core/Link";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,15 +11,6 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     display: "flex",
-  },
-  paper: {
-    margin: theme.spacing(1),
-  },
-
-  polygon: {
-    fill: theme.palette.common.white,
-    stroke: theme.palette.divider,
-    strokeWidth: 1,
   },
 }));
 
@@ -42,8 +33,19 @@ export default function GoogleLinks({ googleLinks }) {
     //   <div className={classes.container}>
 
     <>
-      {googleLinks.results.map((result) => {
-        return <p>{result.url}</p>;
+      {googleLinks.results.map((result, index) => {
+        return (
+          <Grow
+            in={checked}
+            style={{ transformOrigin: "5 5 5" }}
+            {...(checked ? { timeout: index } : {})}
+          >
+            <Link href={result.url}>{result.title}</Link>
+          </Grow>
+        );
+        {
+          /* Conditionally applies the timeout prop to change the entry speed. */
+        }
       })}{" "}
     </>
   );
