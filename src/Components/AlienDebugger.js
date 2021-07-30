@@ -1,27 +1,27 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 
 import SnackbarContent from "@material-ui/core/SnackbarContent";
 import axios from "axios";
-import Typography from "@material-ui/core/Typography";
+
+import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import Alien from "./Alien.gif";
+import { Howl } from "howler";
 import AlienSound from "./AlienSound.mp3";
 import Typist from "react-typist";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
-import ReactHowler from "react-howler";
+
 import Snackbar from "@material-ui/core/Snackbar";
 import Switch from "@material-ui/core/Switch";
 
 import { withStyles } from "@material-ui/core/styles";
 import GoogleLinks from "./GoogleLinks.js";
-
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import Loader from "react-loader-spinner";
+
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-
 import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles({
@@ -33,9 +33,10 @@ const useStyles = makeStyles({
     fontFamily: "Audiowide",
     fontSize: "40px",
     color: "white",
+    textAlign:"center",
     lineHeight: "1em",
     marginRight: "150px",
-  },
+  }, 
   button: {
     position: "absolute",
     margin: "auto",
@@ -47,13 +48,13 @@ const useStyles = makeStyles({
     display: "flex",
     color: "#00FF41",
   },
+
   snack: { barContent: { maxWidth: 3 } },
 });
 
 const AntSwitch = withStyles((theme) => ({
   root: {
     position: "absolute",
-
     margin: "auto",
     right: 22,
     top: 22,
@@ -90,92 +91,83 @@ const AntSwitch = withStyles((theme) => ({
 }))(Switch);
 
 export default function AlienDebugger({ checked, handleChangeMusic }) {
-  const {
+
+  const {     
     transcript,
+    listening,
     resetTranscript,
     browserSupportsSpeechRecognition,
     finalTranscript,
   } = useSpeechRecognition();
-
   const classes = useStyles();
-
-  const [firstDialogue, setFirstDialogue] = useState(true);
+  const [firstDialogue, setFirstDialogue] = useState(false);
   const [secondDialogue, setSecondDialogue] = useState(false);
-  // const [mic, setMic] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [openSnack, setOpenSnack] = useState(false);
   const [mute, setMute] = useState(false);
   const [googleLinks, setGoogleLinks] = useState();
-  // const [recording, setRecording] = useState(finalTranscript);
 
-  // useEffect(() => {
-  //   SpeechRecognition.startListening();
-  // }, [])
+  useEffect(() => {
+    const alienSound = new Howl({
+      src: [AlienSound],
+      loop: false,
+      preload: true,
+      volume: 0.5,
+      onend: () => {
+        setFirstDialogue(true);
+      },
+    });
+    alienSound.play();
+  }, []);
+
+  useEffect(() => {
+    if (!listening && finalTranscript) {
+      console.log("send transcript to GoogleThis", finalTranscript);
+      axios
+        .post("https://rocket-coder-backend.herokuapp.com/googlethis", {
+          transcript: finalTranscript,
+        })
+        .then((res) => {
+          setIsFetching(true);
+          console.log(res);
+          if (res.status === 400) {
+            alert("Alien could not detect audio");
+          } else {
+            setGoogleLinks(res.data);
+            setIsFetching(false);
+          }
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    }
+  }, [listening, finalTranscript]);
 
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
   }
 
-  const handleClose = () => {};
 
-  // const handleClose = () => {
-  //   setOpenSnack(false);
-  //   setTimeout(() => {
-  //     setSecondDialogue(true);
-  //   }, 1000);
-  // };
+   const handleClose = () => {
+    setOpenSnack(false);
+    setTimeout(() => {
+      setSecondDialogue(true);
+    }, 1000);
+  };
 
   const handleSkipScript = () => {
     setFirstDialogue(false);
     setSecondDialogue(false);
     setMute(false);
     setOpenSnack(false);
-    // setMic(true);
+    SpeechRecognition.startListening();
   };
-  // console.log(recording);
 
-  function handlePostRequest(x) {
-    console.log(transcript);
-    // axios
-    //   .post(
-    //     "https://rocket-coder-backend.herokuapp.com/googlethis" /*"http://localhost:3005/googlethis"*/,
-    //     transcript
-    //   )
-    //   .then((res) => {
-    //     setIsFetching(true);
-    //     console.log(res);
-    //     if (res.status === 400) {
-    //       alert("Alien could not detect audio");
-    //     } else {
-    //       setGoogleLinks(res.data);
-    //       setIsFetching(false);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log(error.response);
-    //   });
-  }
 
   return (
-    <React.Fragment>
-      <ReactHowler
-        src={`${AlienSound}`}
-        playing={true}
-        mute={mute}
-        loop={true}
-        volume={0.5}
-      />
-      {isFetching && (
-        <Loader
-          type="Rings"
-          color="#00BFFF"
-          height={100}
-          width={100}
-          timeout={3000} //3 secs
-        />
-      )}
-      <Button onClick={() => handleSkipScript()} className={classes.button}>
-        Skip ᐅ
+    <>
+     <Button onClick={handleSkipScript} className={classes.button}>
+        {!finalTranscript ? "Skip ᐅ" : "Again ᐅ"}
       </Button>
       <Box style={{ backgroundColor: "black" }}>
         <Container className={classes.root}>
@@ -185,102 +177,112 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
             position="absolute"
             margin="0 auto"
           >
-            {firstDialogue && (
+   <div style={{ color: "white", paddingTop: "3em" }}>
+              <p>For debugging purposes:</p>
+              <p>listening: {listening ? "true" : "false"}</p>
+              <p>Final Transcript: {finalTranscript}</p>
+            </div>
+
+            {googleLinks && <GoogleLinks googleLinks={googleLinks} />}
+          </Box>
+          </Container>
+
+<AntSwitch
+  checked={!mute}
+  onChange={() => setMute(!mute)}
+  name="muteMusic"
+/>
+</Box>
+  <div
+        style={{
+          background: `url(${Alien}) `,
+          backgroundPosition: "0% 25%",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          height: "100vh",
+          width: "100%",
+        }}
+      >
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="flex-end"
+          style={{ height: "100vh" }}
+        >
+          {firstDialogue && !finalTranscript && (
+            <Typist
+              onTypingDone={() => {
+                setTimeout(() => {
+                  setFirstDialogue(false);
+                }, 2000);
+                setTimeout(() => {
+                  setOpenSnack(true);
+                }, 4000);
+              }}
+              className={classes.text}
+              cursor={{ element: "" }}
+            >
+              <Typist.Delay ms={2000} />
+              <p>Hi there, I am your alien debugger.. </p>
+              <p>Explain to me your code</p>
+              <p>Tell me the type of errors you get...</p>
+            </Typist>
+          )}
+          {secondDialogue && !finalTranscript && (
+            <>
               <Typist
                 onTypingDone={() => {
-                  setTimeout(() => {
-                    setFirstDialogue(false);
-                  }, 2000);
-                  setTimeout(() => {
-                    setOpenSnack(true);
-                  }, 5000);
+                  SpeechRecognition.startListening();
                 }}
                 className={classes.text}
                 cursor={{ element: "" }}
               >
-                <Typist.Delay ms={2000} />
-                <p>Hi there, I am your alien debugger.. </p>
-                <p>Explain to me your code line by line...</p>
-                <p>
-                  Tell me which type of error are you getting and on which
-                  line...
-                </p>
+                <div>
+                  <p>I will now help you</p>
+                  <p>with my extraterrestrial powers</p>
+                  <p>Speak now and tell me your wish!</p>
+                  {/* <Button onClick={() => handlePostRequest("")}>
+                    CLICK HERE
+                  </Button> */}
+                </div>
               </Typist>
-            )}
-
-            <>
-              <Snackbar
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "right",
-                }}
-                open={openSnack}
-                // onClose={handleClose}
-                onClick={() => setSecondDialogue(true)}
-              >
-                <SnackbarContent
-                  style={{
-                    backgroundColor: "#BDFFF3",
-                    color: "#5B217F",
-                  }}
-                  message={"Still stuck? Click me 👽"}
-                />
-              </Snackbar>
+              {/* <ClickAwayListener
+                    onClickAway={handlePostRequest}
+                  ></ClickAwayListener> */}
             </>
-
-            {secondDialogue && (
-              <>
-                <Typist
-                  onTypingDone={() => {
-                    setMute(true);
-                    console.log("listening");
-                    SpeechRecognition.startListening();
-
-                    // setTimeout(() => {
-                    //   handlePostRequest();
-                    // }, 15000);
-                  }}
-                  className={classes.text}
-                  cursor={{ element: "" }}
-                >
-                  <div>
-                    <p>
-                      I will use my extraterrestrial powers to help unstuck
-                      you... Talk to me...
-                    </p>
-                    <p>transcript: {transcript}</p>
-                    <Button onClick={() => handlePostRequest("")}>
-                      CLICK HERE
-                    </Button>
-                  </div>
-                </Typist>
-                {/* <ClickAwayListener
-          onClickAway={handlePostRequest}
-        ></ClickAwayListener> */}
-              </>
-            )}
-
-            {googleLinks && <GoogleLinks googleLinks={googleLinks} />}
-          </Box>
-
-          <Typography
-            component="div"
-            style={{
-              background: `url(${Alien}) `,
-              backgroundPosition: "top",
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              height: "100vh",
-            }}
-          />
-        </Container>
-
-        <AntSwitch
-          checked={!mute}
-          onChange={() => setMute(!mute)}
-          name="muteMusic"
+          )}
+          {finalTranscript && (
+            <Typist
+              // onTypingDone={() => {
+              //   console.log("firing request");
+              // }}
+              className={classes.text}
+              cursor={{ element: "" }}
+            >
+              <p>{finalTranscript}</p>
+            </Typist>
+          )}
+        </Grid>
+      </div>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        open={openSnack}
+        onClick={handleClose}
+      >
+        <SnackbarContent
+          style={{
+            backgroundColor: "#BDFFF3",
+            color: "#5B217F",
+          }}
+          message={"Still stuck? Click me 👽"}
         />
-      </Box>
-    </React.Fragment>
+      </Snackbar>
+    </>
   );
 }
+
+ 
