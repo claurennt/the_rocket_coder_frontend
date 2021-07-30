@@ -22,7 +22,15 @@ function App() {
   const [location, setLocation] = useState();
   // const l = useLocation();
   // console.log(l);
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+  const watch = true;
+=======
+
+>>>>>>> main
+>>>>>>> aliendebuggerdebugging
   const { latitude, longitude } = usePosition();
 
   const [checked, setChecked] = useState(false);
@@ -55,13 +63,16 @@ function App() {
             icon: data.weather[0].icon,
             city: data.name,
             temperature: data.main.temp,
+
             latitude: data.coord.lat,
             longitude: data.coord.lon,
           });
           console.log(data);
         });
     }
+
   }, [longitude, latitude]);
+
   console.log(picOfTheDay);
   return (
     <div className="App">
