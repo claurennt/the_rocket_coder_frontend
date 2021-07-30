@@ -1,9 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Switch from "@material-ui/core/Switch";
 
-import Fade from "@material-ui/core/Fade";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Link from "@material-ui/core/Link";
+import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,17 +20,21 @@ const useStyles = makeStyles((theme) => ({
     stroke: theme.palette.divider,
     strokeWidth: 1,
   },
+  box: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  link: {
+    color: "red",
+  },
 }));
 
 export default function GoogleLinks({ googleLinks }) {
   console.log(googleLinks);
 
   const classes = useStyles();
-  const [checked, setChecked] = React.useState(false);
-
-  const handleChange = () => {
-    setChecked((prev) => !prev);
-  };
 
   return (
     // <div className={classes.root}>
@@ -40,11 +43,14 @@ export default function GoogleLinks({ googleLinks }) {
     //     label="Show"
     //   />
     //   <div className={classes.container}>
-
-    <>
+    <Box display="flex" flexDirection="column" m={5}>
       {googleLinks.results.map((result) => {
-        return <p>{result.url}</p>;
+        return (
+          <Link className={classes.link} href={result.url}>
+            {result.title}
+          </Link>
+        );
       })}{" "}
-    </>
+    </Box>
   );
 }
