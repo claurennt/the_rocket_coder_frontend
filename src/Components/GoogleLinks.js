@@ -44,9 +44,9 @@ export default function GoogleLinks({ googleLinks }) {
     //   />
     //   <div className={classes.container}>
     <Box display="flex" flexDirection="column" m={5}>
-      {googleLinks.results.map((result) => {
+      {googleLinks.results.map((result, index) => {
         return (
-          <Link className={classes.link} href={result.url}>
+          <Link className={classes.link} href={result.url} key={index}>
             {result.title}
           </Link>
         );

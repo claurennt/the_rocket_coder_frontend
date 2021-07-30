@@ -60,7 +60,7 @@ function App() {
         });
     }
   }, [latitude, longitude]);
-  console.log(picOfTheDay);
+  console.log({ picOfTheDay });
   return (
     <div className="App">
       <SwipeableTemporaryDrawer />
