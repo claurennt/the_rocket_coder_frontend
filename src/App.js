@@ -22,7 +22,11 @@ function App() {
   const [location, setLocation] = useState();
   // const l = useLocation();
   // console.log(l);
+<<<<<<< HEAD
   const watch = true;
+=======
+
+>>>>>>> main
   const { latitude, longitude } = usePosition();
 
   const [checked, setChecked] = useState(false);
@@ -55,11 +59,20 @@ function App() {
             icon: data.weather[0].icon,
             city: data.name,
             temperature: data.main.temp,
+<<<<<<< HEAD
+=======
+            latitude: data.coord.lat,
+            longitude: data.coord.lon,
+>>>>>>> main
           });
           console.log(data);
         });
     }
+<<<<<<< HEAD
   }, [latitude, longitude]);
+=======
+  }, [longitude, latitude]);
+>>>>>>> main
   console.log(picOfTheDay);
   return (
     <div className="App">
@@ -75,7 +88,11 @@ function App() {
           <DiscoverEvents />
         </Route>
         <Route path="/focustimer/">
+<<<<<<< HEAD
           <FocusTimer />
+=======
+          <FocusTimer weatherData={weatherData} />
+>>>>>>> main
         </Route>
         <Route path="/robocodingquiz/">
           <RoboCodingQuiz />
