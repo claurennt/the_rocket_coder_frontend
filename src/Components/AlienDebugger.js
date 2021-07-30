@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import Box from "@material-ui/core/Box";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
 import axios from "axios";
 
@@ -10,7 +10,6 @@ import { Howl } from "howler";
 import AlienSound from "./AlienSound.mp3";
 import Typist from "react-typist";
 import { makeStyles } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
 
 import Snackbar from "@material-ui/core/Snackbar";
 import Switch from "@material-ui/core/Switch";
@@ -33,10 +32,10 @@ const useStyles = makeStyles({
     fontFamily: "Audiowide",
     fontSize: "40px",
     color: "white",
-    textAlign:"center",
+    textAlign: "center",
     lineHeight: "1em",
     marginRight: "150px",
-  }, 
+  },
   button: {
     position: "absolute",
     margin: "auto",
@@ -91,18 +90,17 @@ const AntSwitch = withStyles((theme) => ({
 }))(Switch);
 
 export default function AlienDebugger({ checked, handleChangeMusic }) {
-
-  const {     
-    transcript,
+  const {
+    // transcript,
     listening,
-    resetTranscript,
+
     browserSupportsSpeechRecognition,
     finalTranscript,
   } = useSpeechRecognition();
   const classes = useStyles();
   const [firstDialogue, setFirstDialogue] = useState(false);
   const [secondDialogue, setSecondDialogue] = useState(false);
-  const [isFetching, setIsFetching] = useState(false);
+  // const [isFetching, setIsFetching] = useState(false);
   const [openSnack, setOpenSnack] = useState(false);
   const [mute, setMute] = useState(false);
   const [googleLinks, setGoogleLinks] = useState();
@@ -128,13 +126,13 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
           transcript: finalTranscript,
         })
         .then((res) => {
-          setIsFetching(true);
+          // setIsFetching(true);
           console.log(res);
           if (res.status === 400) {
             alert("Alien could not detect audio");
           } else {
             setGoogleLinks(res.data);
-            setIsFetching(false);
+            // setIsFetching(false);
           }
         })
         .catch((error) => {
@@ -147,8 +145,7 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
     return <span>Browser doesn't support speech recognition.</span>;
   }
 
-
-   const handleClose = () => {
+  const handleClose = () => {
     setOpenSnack(false);
     setTimeout(() => {
       setSecondDialogue(true);
@@ -163,10 +160,9 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
     SpeechRecognition.startListening();
   };
 
-
   return (
     <>
-     <Button onClick={handleSkipScript} className={classes.button}>
+      <Button onClick={handleSkipScript} className={classes.button}>
         {!finalTranscript ? "Skip ᐅ" : "Again ᐅ"}
       </Button>
       <Box style={{ backgroundColor: "black" }}>
@@ -177,7 +173,7 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
             position="absolute"
             margin="0 auto"
           >
-   <div style={{ color: "white", paddingTop: "3em" }}>
+            <div style={{ color: "white", paddingTop: "3em" }}>
               <p>For debugging purposes:</p>
               <p>listening: {listening ? "true" : "false"}</p>
               <p>Final Transcript: {finalTranscript}</p>
@@ -185,15 +181,15 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
 
             {googleLinks && <GoogleLinks googleLinks={googleLinks} />}
           </Box>
-          </Container>
+        </Container>
 
-<AntSwitch
-  checked={!mute}
-  onChange={() => setMute(!mute)}
-  name="muteMusic"
-/>
-</Box>
-  <div
+        <AntSwitch
+          checked={!mute}
+          onChange={() => setMute(!mute)}
+          name="muteMusic"
+        />
+      </Box>
+      <div
         style={{
           background: `url(${Alien}) `,
           backgroundPosition: "0% 25%",
@@ -284,5 +280,3 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
     </>
   );
 }
-
- 
