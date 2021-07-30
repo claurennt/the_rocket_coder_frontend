@@ -19,11 +19,11 @@ import Shortcuts from "./Components/Shortcuts";
 function App() {
   const [weatherData, setWeatherData] = useState();
   const { picOfTheDay } = useNasaPicture();
-  const [location, setLocation] = useState();
+  // const [location, setLocation] = useState();
   // const l = useLocation();
   // console.log(l);
 
-  const watch = true;
+  // const watch = true;
 
   const { latitude, longitude } = usePosition();
 
@@ -64,7 +64,6 @@ function App() {
           console.log(data);
         });
     }
-
   }, [longitude, latitude]);
 
   console.log(picOfTheDay);
@@ -96,7 +95,7 @@ function App() {
             weatherData={weatherData}
             checked={checked}
             handleChangeMusic={handleChangeMusic}
-            location={location}
+            // location={location}
           />
         </Route>
       </Switch>

@@ -1,6 +1,6 @@
 import React from "react";
 import ReactGlobe from "react-globe";
-import * as THREE from "three";
+// import * as THREE from "three";
 import { useState, useEffect } from "react";
 function FocusTimer({ weatherData }) {
   const markers = [
