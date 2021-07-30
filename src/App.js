@@ -23,7 +23,7 @@ function App() {
   // const l = useLocation();
   // console.log(l);
   const watch = true;
-  const { latitude, longitude } = usePosition(watch);
+  const { latitude, longitude } = usePosition();
 
   const [checked, setChecked] = useState(false);
 
@@ -31,18 +31,18 @@ function App() {
     setChecked((prev) => !prev);
   };
 
-  useEffect(() => {
-    if (latitude && longitude) {
-      const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`;
+  // useEffect(() => {
+  //   if (latitude && longitude) {
+  //     const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`;
 
-      fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-          setLocation(data);
-          console.log({ data });
-        });
-    }
-  }, [longitude, latitude]);
+  //     fetch(url)
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         setLocation(data);
+  //         console.log({ data });
+  //       });
+  //   }
+  // }, [longitude, latitude]);
 
   // const images = images.map((image) =>
   useEffect(() => {
@@ -59,7 +59,7 @@ function App() {
           console.log(data);
         });
     }
-  }, [longitude, latitude]);
+  }, [latitude, longitude]);
   console.log(picOfTheDay);
   return (
     <div className="App">

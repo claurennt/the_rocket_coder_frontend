@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+
 import SnackbarContent from "@material-ui/core/SnackbarContent";
 import axios from "axios";
 import Typography from "@material-ui/core/Typography";
@@ -12,17 +12,16 @@ import Box from "@material-ui/core/Box";
 import ReactHowler from "react-howler";
 import Snackbar from "@material-ui/core/Snackbar";
 import Switch from "@material-ui/core/Switch";
-import MicOffOutlinedIcon from "@material-ui/icons/MicOffOutlined";
+
 import { withStyles } from "@material-ui/core/styles";
 import GoogleLinks from "./GoogleLinks.js";
-import RotateLeftOutlinedIcon from "@material-ui/icons/RotateLeftOutlined";
+
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 
-import MicNoneOutlinedIcon from "@material-ui/icons/MicNoneOutlined";
 import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles({
@@ -36,6 +35,17 @@ const useStyles = makeStyles({
     color: "white",
     lineHeight: "1em",
     marginRight: "150px",
+  },
+  button: {
+    position: "absolute",
+    margin: "auto",
+    right: 22,
+    top: 72,
+    width: 28,
+    height: 16,
+    padding: 0,
+    display: "flex",
+    color: "#00FF41",
   },
   snack: { barContent: { maxWidth: 3 } },
 });
@@ -80,53 +90,71 @@ const AntSwitch = withStyles((theme) => ({
 }))(Switch);
 
 export default function AlienDebugger({ checked, handleChangeMusic }) {
-  const { transcript, resetTranscript, browserSupportsSpeechRecognition } =
-    useSpeechRecognition();
+  const {
+    transcript,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+    finalTranscript,
+  } = useSpeechRecognition();
+
   const classes = useStyles();
+
   const [firstDialogue, setFirstDialogue] = useState(true);
   const [secondDialogue, setSecondDialogue] = useState(false);
-  const [mic, setMic] = useState(false);
+  // const [mic, setMic] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
   const [openSnack, setOpenSnack] = useState(false);
   const [mute, setMute] = useState(false);
   const [googleLinks, setGoogleLinks] = useState();
+  // const [recording, setRecording] = useState(finalTranscript);
+
+  // useEffect(() => {
+  //   SpeechRecognition.startListening();
+  // }, [])
 
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
   }
 
-  const handleClose = () => {
+  const handleClose = () => {};
+
+  // const handleClose = () => {
+  //   setOpenSnack(false);
+  //   setTimeout(() => {
+  //     setSecondDialogue(true);
+  //   }, 1000);
+  // };
+
+  const handleSkipScript = () => {
+    setFirstDialogue(false);
+    setSecondDialogue(false);
+    setMute(false);
     setOpenSnack(false);
-    setTimeout(() => {
-      setSecondDialogue(true);
-    }, 1000);
+    // setMic(true);
   };
+  // console.log(recording);
 
-  const handlePostRequest = () => {
-    SpeechRecognition.stopListening();
-    axios
-      .post(
-        "https://rocket-coder-backend.herokuapp.com/googlethis" /*http://localhost:3001/googlethis*/,
-        { transcript: transcript }
-      )
-      .then((res) => {
-        setIsFetching(true);
-        setMic(false);
-        console.log(res);
-
-        if (res.status === 400) {
-          alert("Alien could not detect audio");
-        } else {
-          setGoogleLinks(res.data);
-          setIsFetching(false);
-        }
-      })
-      .catch((error) => {
-        console.log("Could not help you");
-        console.log(error.message);
-      });
-  };
+  function handlePostRequest(x) {
+    console.log(transcript);
+    // axios
+    //   .post(
+    //     "https://rocket-coder-backend.herokuapp.com/googlethis" /*"http://localhost:3005/googlethis"*/,
+    //     transcript
+    //   )
+    //   .then((res) => {
+    //     setIsFetching(true);
+    //     console.log(res);
+    //     if (res.status === 400) {
+    //       alert("Alien could not detect audio");
+    //     } else {
+    //       setGoogleLinks(res.data);
+    //       setIsFetching(false);
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error.response);
+    //   });
+  }
 
   return (
     <React.Fragment>
@@ -146,7 +174,9 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
           timeout={3000} //3 secs
         />
       )}
-
+      <Button onClick={() => handleSkipScript()} className={classes.button}>
+        Skip ᐅ
+      </Button>
       <Box style={{ backgroundColor: "black" }}>
         <Container className={classes.root}>
           <Box
@@ -179,35 +209,36 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
             )}
 
             <>
-              <ClickAwayListener onClickAway={handleClose}>
-                <Snackbar
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "right",
+              <Snackbar
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+                open={openSnack}
+                // onClose={handleClose}
+                onClick={() => setSecondDialogue(true)}
+              >
+                <SnackbarContent
+                  style={{
+                    backgroundColor: "#BDFFF3",
+                    color: "#5B217F",
                   }}
-                  open={openSnack}
-                  onClose={handleClose}
-                >
-                  <SnackbarContent
-                    style={{
-                      backgroundColor: "#BDFFF3",
-                      color: "#5B217F",
-                    }}
-                    message={"Still stuck? Click me.->"}
-                  />
-                </Snackbar>
-              </ClickAwayListener>
+                  message={"Still stuck? Click me 👽"}
+                />
+              </Snackbar>
             </>
 
             {secondDialogue && (
               <>
                 <Typist
                   onTypingDone={() => {
-                    setTimeout(() => {
-                      setSecondDialogue(false);
-                      setMic(true);
-                    }, 2000);
                     setMute(true);
+                    console.log("listening");
+                    SpeechRecognition.startListening();
+
+                    // setTimeout(() => {
+                    //   handlePostRequest();
+                    // }, 15000);
                   }}
                   className={classes.text}
                   cursor={{ element: "" }}
@@ -215,28 +246,20 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
                   <div>
                     <p>
                       I will use my extraterrestrial powers to help unstuck
-                      you...{" "}
+                      you... Talk to me...
                     </p>
+                    <p>transcript: {transcript}</p>
+                    <Button onClick={() => handlePostRequest("")}>
+                      CLICK HERE
+                    </Button>
                   </div>
                 </Typist>
+                {/* <ClickAwayListener
+          onClickAway={handlePostRequest}
+        ></ClickAwayListener> */}
               </>
             )}
-            {mic && (
-              <>
-                <Box display="flex" flexDirection="row">
-                  <Button onClick={SpeechRecognition.startListening}>
-                    <MicNoneOutlinedIcon />
-                  </Button>
-                  <Button onClick={() => handlePostRequest()}>
-                    <MicOffOutlinedIcon />
-                  </Button>
-                  <Button onClick={resetTranscript}>
-                    <RotateLeftOutlinedIcon />
-                  </Button>
-                  <p className={classes.text}>{transcript}</p>
-                </Box>
-              </>
-            )}
+
             {googleLinks && <GoogleLinks googleLinks={googleLinks} />}
           </Box>
 
