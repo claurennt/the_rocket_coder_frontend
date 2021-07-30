@@ -22,15 +22,9 @@ function App() {
   const [location, setLocation] = useState();
   // const l = useLocation();
   // console.log(l);
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
   const watch = true;
-=======
 
->>>>>>> main
->>>>>>> aliendebuggerdebugging
   const { latitude, longitude } = usePosition();
 
   const [checked, setChecked] = useState(false);
