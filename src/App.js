@@ -19,9 +19,11 @@ import Shortcuts from "./Components/Shortcuts";
 function App() {
   const [weatherData, setWeatherData] = useState();
   const { picOfTheDay } = useNasaPicture();
-  const [location, setLocation] = useState();
+  // const [location, setLocation] = useState();
   // const l = useLocation();
   // console.log(l);
+
+  // const watch = true;
 
   const { latitude, longitude } = usePosition();
 
@@ -62,6 +64,7 @@ function App() {
         });
     }
   }, [longitude, latitude]);
+
   console.log(picOfTheDay);
   return (
     <div className="App">
@@ -77,7 +80,11 @@ function App() {
           <DiscoverEvents />
         </Route>
         <Route path="/focustimer/">
-          <FocusTimer weatherData={weatherData} />
+          <FocusTimer
+            weatherData={weatherData}
+            latitude={latitude}
+            longitude={longitude}
+          />
         </Route>
         <Route path="/robocodingquiz/">
           <RoboCodingQuiz />
@@ -91,7 +98,7 @@ function App() {
             weatherData={weatherData}
             checked={checked}
             handleChangeMusic={handleChangeMusic}
-            location={location}
+            // location={location}
           />
         </Route>
       </Switch>

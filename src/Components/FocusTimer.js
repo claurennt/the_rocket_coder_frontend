@@ -1,5 +1,6 @@
 import React from "react";
 import ReactGlobe from "react-globe";
+<<<<<<< HEAD
 import * as THREE from "three";
 import { useState, useEffect } from "react";
 function FocusTimer({ weatherData }) {
@@ -73,6 +74,40 @@ function FocusTimer({ weatherData }) {
   //   default:
   //     animations = [];
   // }
+=======
+// import * as THREE from "three";
+import { useState, useEffect } from "react";
+function FocusTimer({ weatherData, latitude, longitude }) {
+  const [animationSequence, setAnimationSequence] = useState([]);
+
+  // if the user does not allow location set it to the default
+  if (!latitude || !longitude) {
+    latitude = 30.005493;
+    longitude = 31.477898;
+  }
+
+  // properties of the marker on the globe
+  const markers = [
+    {
+      id: "marker1",
+      color: "red",
+      coordinates: [latitude, longitude],
+      value: 50,
+    },
+  ];
+
+  useEffect(() => {
+    setAnimationSequence([
+      {
+        coordinates: [latitude, longitude],
+        focusAnimationDuration: 3000,
+        focusDistanceRadiusScale: 3,
+        focusEasingFunction: ["Linear", "None"],
+      },
+    ]);
+  }, [latitude, longitude]);
+
+>>>>>>> 3d6a27d09706352415b017b12def22b1547bedd1
   return (
     <>
       {animationSequence && (
@@ -85,11 +120,15 @@ function FocusTimer({ weatherData }) {
             enableGlobeGlow: true,
             globeGlowCoefficient: 0.1,
             globeGlowColor: "gold",
+<<<<<<< HEAD
             // globeGlowPower: 4,
             // globeGlowRadiusScale: 0.5,
             cameraAutoRotateSpeed: 0.5,
             // cameraMaxPolarAngle: (Math.PI * 9) / 16,
             // cameraMinPolarAngle: (Math.PI * 7) / 16,
+=======
+            cameraAutoRotateSpeed: 0.5,
+>>>>>>> 3d6a27d09706352415b017b12def22b1547bedd1
             cameraRotateSpeed: 1,
             enableCameraAutoRotate: true,
             enableCameraRotate: true,
@@ -108,6 +147,10 @@ function FocusTimer({ weatherData }) {
         <button onClick={() => setAnimationSequence("world")}>
           Travel the world
         </button> */}
+<<<<<<< HEAD
+=======
+        <h1>12</h1>
+>>>>>>> 3d6a27d09706352415b017b12def22b1547bedd1
       </div>
     </>
   );
