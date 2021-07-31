@@ -1,27 +1,24 @@
 import React, { useEffect, useState } from "react";
-import Box from "@material-ui/core/Box";
-import SnackbarContent from "@material-ui/core/SnackbarContent";
 import axios from "axios";
+import GoogleLinks from "./GoogleLinks.js";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import { useHistory } from "react-router-dom";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 
+// Material-UI imports
+import SnackbarContent from "@material-ui/core/SnackbarContent";
+import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
+import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
 import Alien from "./Alien.gif";
 import { Howl } from "howler";
 import AlienSound from "./AlienSound.mp3";
 import Typist from "react-typist";
-import { makeStyles } from "@material-ui/core/styles";
-
 import Snackbar from "@material-ui/core/Snackbar";
-import Switch from "@material-ui/core/Switch";
-
-import { withStyles } from "@material-ui/core/styles";
-import GoogleLinks from "./GoogleLinks.js";
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-
-import SpeechRecognition, {
-  useSpeechRecognition,
-} from "react-speech-recognition";
-import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles({
   root: {
@@ -34,8 +31,8 @@ const useStyles = makeStyles({
     color: "white",
     textAlign: "center",
     lineHeight: "1em",
-    marginRight: "150px",
   },
+
   button: {
     position: "absolute",
     margin: "auto",
@@ -47,76 +44,51 @@ const useStyles = makeStyles({
     display: "flex",
     color: "#00FF41",
   },
-
-  snack: { barContent: { maxWidth: 3 } },
-});
-
-const AntSwitch = withStyles((theme) => ({
-  root: {
+  boxLinks: {
     position: "absolute",
     margin: "auto",
     right: 22,
-    top: 22,
+    top: 100,
     width: 28,
     height: 16,
     padding: 0,
     display: "flex",
+    color: "#00FF41",
   },
-  switchBase: {
-    padding: 2,
-    color: theme.palette.grey[500],
-    "&$checked": {
-      transform: "translateX(12px)",
-      color: theme.palette.common.white,
-      "& + $track": {
-        opacity: 1,
-        backgroundColor: theme.palette.primary.main,
-        borderColor: theme.palette.primary.main,
-      },
-    },
-  },
-  thumb: {
-    width: 12,
-    height: 12,
-    boxShadow: "none",
-  },
-  track: {
-    border: `1px solid ${theme.palette.grey[500]}`,
-    borderRadius: 16 / 2,
-    opacity: 1,
-    backgroundColor: theme.palette.common.white,
-  },
-  checked: true,
-}))(Switch);
+  snack: { barContent: { maxWidth: 3 } },
+});
 
-export default function AlienDebugger({ checked, handleChangeMusic }) {
-  const {
-    // transcript,
-    listening,
-
-    browserSupportsSpeechRecognition,
-    finalTranscript,
-  } = useSpeechRecognition();
+export default function AlienDebugger() {
+  const { listening, browserSupportsSpeechRecognition, finalTranscript } =
+    useSpeechRecognition();
   const classes = useStyles();
   const [firstDialogue, setFirstDialogue] = useState(false);
   const [secondDialogue, setSecondDialogue] = useState(false);
-  // const [isFetching, setIsFetching] = useState(false);
+
   const [openSnack, setOpenSnack] = useState(false);
-  const [mute, setMute] = useState(false);
+
   const [googleLinks, setGoogleLinks] = useState();
+
+  let history = useHistory();
 
   useEffect(() => {
     const alienSound = new Howl({
       src: [AlienSound],
       loop: false,
       preload: true,
+      autoplay: true,
       volume: 0.5,
       onend: () => {
         setFirstDialogue(true);
       },
     });
-    alienSound.play();
-  }, []);
+    // stop the sound on route change
+    history.listen((location) => {
+      location.pathname === "/aliendebugger"
+        ? alienSound.play()
+        : alienSound.stop();
+    });
+  }, [history]);
 
   useEffect(() => {
     if (!listening && finalTranscript) {
@@ -126,13 +98,11 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
           transcript: finalTranscript,
         })
         .then((res) => {
-          // setIsFetching(true);
           console.log(res);
           if (res.status === 400) {
             alert("Alien could not detect audio");
           } else {
             setGoogleLinks(res.data);
-            // setIsFetching(false);
           }
         })
         .catch((error) => {
@@ -155,7 +125,7 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
   const handleSkipScript = () => {
     setFirstDialogue(false);
     setSecondDialogue(false);
-    setMute(false);
+
     setOpenSnack(false);
     SpeechRecognition.startListening();
   };
@@ -172,22 +142,20 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
             flexDirection="column"
             position="absolute"
             margin="0 auto"
+            right="5%"
           >
-            <div style={{ color: "white", paddingTop: "3em" }}>
+            {googleLinks && (
+              <>
+                <GoogleLinks googleLinks={googleLinks} />
+              </>
+            )}
+            {/* <div style={{ color: "white", paddingTop: "3em" }}>
               <p>For debugging purposes:</p>
               <p>listening: {listening ? "true" : "false"}</p>
               <p>Final Transcript: {finalTranscript}</p>
-            </div>
-
-            {googleLinks && <GoogleLinks googleLinks={googleLinks} />}
+            </div> */}
           </Box>
         </Container>
-
-        <AntSwitch
-          checked={!mute}
-          onChange={() => setMute(!mute)}
-          name="muteMusic"
-        />
       </Box>
       <div
         style={{
@@ -238,24 +206,12 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
                   <p>I will now help you</p>
                   <p>with my extraterrestrial powers</p>
                   <p>Speak now and tell me your wish!</p>
-                  {/* <Button onClick={() => handlePostRequest("")}>
-                    CLICK HERE
-                  </Button> */}
                 </div>
               </Typist>
-              {/* <ClickAwayListener
-                    onClickAway={handlePostRequest}
-                  ></ClickAwayListener> */}
             </>
           )}
           {finalTranscript && (
-            <Typist
-              // onTypingDone={() => {
-              //   console.log("firing request");
-              // }}
-              className={classes.text}
-              cursor={{ element: "" }}
-            >
+            <Typist className={classes.text} cursor={{ element: "" }}>
               <p>{finalTranscript}</p>
             </Typist>
           )}
@@ -274,7 +230,7 @@ export default function AlienDebugger({ checked, handleChangeMusic }) {
             backgroundColor: "#BDFFF3",
             color: "#5B217F",
           }}
-          message={"Still stuck? Click me 👽"}
+          message={"Still stuck? Click me!"}
         />
       </Snackbar>
     </>

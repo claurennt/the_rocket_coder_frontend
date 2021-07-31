@@ -19,11 +19,6 @@ import Shortcuts from "./Components/Shortcuts";
 function App() {
   const [weatherData, setWeatherData] = useState();
   const { picOfTheDay } = useNasaPicture();
-  // const [location, setLocation] = useState();
-  // const l = useLocation();
-  // console.log(l);
-
-  // const watch = true;
 
   const { latitude, longitude } = usePosition();
 
@@ -71,12 +66,6 @@ function App() {
     <div className="App">
       <SwipeableTemporaryDrawer />
       <Switch>
-        <Route path="/aliendebugger">
-          <AlienDebugger
-            checked={checked}
-            handleChangeMusic={handleChangeMusic}
-          />
-        </Route>
         <Route path="/discoverevents">
           <DiscoverEvents />
         </Route>
@@ -92,6 +81,9 @@ function App() {
         </Route>
         <Route path="/shortcuts/">
           <Shortcuts />
+        </Route>
+        <Route path="/aliendebugger">
+          <AlienDebugger />
         </Route>
         <Route path="/">
           <Home
