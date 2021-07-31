@@ -1,6 +1,6 @@
 import React from "react";
 import ReactGlobe from "react-globe";
-// import * as THREE from "three";
+import Typography from "@material-ui/core/Typography";
 import { useState, useEffect } from "react";
 function FocusTimer({ weatherData, latitude, longitude }) {
   const [animationSequence, setAnimationSequence] = useState([]);
@@ -63,7 +63,7 @@ function FocusTimer({ weatherData, latitude, longitude }) {
         <button onClick={() => setAnimationSequence("world")}>
           Travel the world
         </button> */}
-        <h1>12</h1>
+        <Typography variant="subtitle1">12</Typography>
       </div>
     </>
   );
