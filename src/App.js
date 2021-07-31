@@ -81,7 +81,11 @@ function App() {
           <DiscoverEvents />
         </Route>
         <Route path="/focustimer/">
-          <FocusTimer weatherData={weatherData} />
+          <FocusTimer
+            weatherData={weatherData}
+            latitude={latitude}
+            longitude={longitude}
+          />
         </Route>
         <Route path="/robocodingquiz/">
           <RoboCodingQuiz />
