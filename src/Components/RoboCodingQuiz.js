@@ -136,7 +136,6 @@ export default function RoboCodingQuiz() {
             showDefaultResult={true}
             showInstantFeedback={true}
             onComplete={onQuizEnd}
-            shuffle={true}
           />
         )}
       </div>
