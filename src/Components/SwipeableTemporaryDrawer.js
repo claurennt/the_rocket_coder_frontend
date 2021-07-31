@@ -20,7 +20,7 @@ import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 import MenuIcon from "@material-ui/icons/Menu";
 import {
   AlienOutline,
-  Telescope,
+  // Telescope,
   RobotLoveOutline,
   RocketLaunchOutline,
 } from "mdi-material-ui";
@@ -108,7 +108,7 @@ export default function SwipeableTemporaryDrawer() {
           </Link>
         ))}
       </List>
-      <List>
+      {/* <List>
         {["Discover Events"].map((text, index) => (
           <Link to="/discoverevents" className={classes.link} key={index}>
             <ListItem button>
@@ -121,8 +121,7 @@ export default function SwipeableTemporaryDrawer() {
             </ListItem>
           </Link>
         ))}
-      </List>
-
+      </List> */}
       <List>
         {["Robo Coding Quiz"].map((text, index) => (
           <Link to="/robocodingquiz" className={classes.link} key={index}>
@@ -167,7 +166,7 @@ export default function SwipeableTemporaryDrawer() {
 
   return (
     <>
-      {["left"].map((anchor,index) => (
+      {["left"].map((anchor, index) => (
         <React.Fragment key={index}>
           <Button
             onClick={toggleDrawer(anchor, true)}
