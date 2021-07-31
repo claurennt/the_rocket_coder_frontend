@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-import React, { useState } from "react";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-=======
 import React, { useEffect, useState } from "react";
 import Box from "@material-ui/core/Box";
->>>>>>> 3d6a27d09706352415b017b12def22b1547bedd1
+
 import SnackbarContent from "@material-ui/core/SnackbarContent";
 import axios from "axios";
 
