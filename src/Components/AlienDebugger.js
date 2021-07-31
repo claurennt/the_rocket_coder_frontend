@@ -1,4 +1,9 @@
 import React, { useEffect, useState } from "react";
+
+import Box from "@material-ui/core/Box";
+
+import SnackbarContent from "@material-ui/core/SnackbarContent";
+
 import axios from "axios";
 import GoogleLinks from "./GoogleLinks.js";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";

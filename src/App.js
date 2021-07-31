@@ -52,7 +52,6 @@ function App() {
             icon: data.weather[0].icon,
             city: data.name,
             temperature: data.main.temp,
-
             latitude: data.coord.lat,
             longitude: data.coord.lon,
           });
