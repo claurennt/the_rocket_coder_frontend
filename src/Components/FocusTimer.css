@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  background-color: transparent!;
+}
+
+#wrap {
+  height: 90vh;
+  width: 35vw;
+  margin-left: 0px;
+}
+
+.material-icons {
+  font-style: normal;
+}
