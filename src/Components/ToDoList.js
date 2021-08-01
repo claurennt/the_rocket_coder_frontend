@@ -12,6 +12,10 @@ const ToDo = () => {
   const classes = useStyles();
   const [tasks, setTasks] = useState([]);
 
+  // const storedTasks = localStorage.getItem("tasks", JSON.parse(tasks));
+  // if (storedTasks) console.log(storedTasks);
+  // console.log(localStorage.setItem("tasks", JSON.stringify(tasks)));
+
   const renderThumb = () => {
     const thumbStyle = {
       backgroundColor: "white",
