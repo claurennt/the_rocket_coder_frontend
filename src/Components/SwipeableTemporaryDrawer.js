@@ -178,7 +178,9 @@ export default function SwipeableTemporaryDrawer() {
               top: 0,
               color: "#00FF41",
             }}
+
             // text={{ text: "click" }}
+
           >
             <MenuIcon />
             MENU

@@ -1,5 +1,6 @@
 import React from "react";
 import ReactGlobe from "react-globe";
+
 // import * as THREE from "three";
 import { useState, useEffect, useRef } from "react";
 import useInterval from "react-useinterval";
@@ -10,12 +11,8 @@ import { Container, Row, Col, Jumbotron } from "react-bootstrap";
 import beep1 from "../sounds/beep1.mp3";
 import beep2 from "../sounds/beep2.mp3";
 import "./FocusTimer.css";
-<link
-  rel="stylesheet"
-  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-  integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-  crossorigin="anonymous"
-/>;
+
+
 function FocusTimer({ weatherData, latitude, longitude }) {
   const [sessionLength, setSessionLength] = useState(25);
   const [cycle, setCycle] = useState(0);
@@ -130,6 +127,7 @@ function FocusTimer({ weatherData, latitude, longitude }) {
         <button onClick={() => setAnimationSequence("world")}>
           Travel the world
         </button> */}
+
         <Container
           fluid
           id="wrap"
@@ -173,6 +171,7 @@ function FocusTimer({ weatherData, latitude, longitude }) {
         </Container>
         <audio id="beep1" src={beep1} ref={sound1} />
         <audio id="beep" src={beep2} ref={sound2} />
+
       </div>
     </>
   );
