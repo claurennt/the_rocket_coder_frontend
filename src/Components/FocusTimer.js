@@ -31,6 +31,8 @@ function FocusTimer({ weatherData, latitude, longitude }) {
     latitude = 30.005493;
     longitude = 31.477898;
   }
+
+  // memorize opt
   const options = useMemo(() => {
     return {
       enableGlobeGlow: true,
