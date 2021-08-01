@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import Box from "@material-ui/core/Box";
-
-import SnackbarContent from "@material-ui/core/SnackbarContent";
-
 import axios from "axios";
 import GoogleLinks from "./GoogleLinks.js";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
@@ -130,7 +126,6 @@ export default function AlienDebugger() {
   const handleSkipScript = () => {
     setFirstDialogue(false);
     setSecondDialogue(false);
-
     setOpenSnack(false);
     SpeechRecognition.startListening();
   };
@@ -149,6 +144,7 @@ export default function AlienDebugger() {
             margin="0 auto"
             right="5%"
           >
+            {/* show links after backend response */}
             {googleLinks && (
               <>
                 <GoogleLinks googleLinks={googleLinks} />
@@ -215,6 +211,7 @@ export default function AlienDebugger() {
               </Typist>
             </>
           )}
+          {/* show what the user asked on screen */}
           {finalTranscript && (
             <Typist className={classes.text} cursor={{ element: "" }}>
               <p>{finalTranscript}</p>
@@ -235,7 +232,7 @@ export default function AlienDebugger() {
             backgroundColor: "#BDFFF3",
             color: "#5B217F",
           }}
-          message={"Still stuck? Click me!"}
+          message={"Still stuck? Click this!"}
         />
       </Snackbar>
     </>
