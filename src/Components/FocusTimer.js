@@ -2,7 +2,7 @@ import React from "react";
 import ReactGlobe from "react-globe";
 import { useMemo } from "react";
 // import * as THREE from "three";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import useInterval from "react-useinterval";
 import Timer from "./Timer";
 import TimerControls from "./TimerControls";
@@ -31,8 +31,6 @@ function FocusTimer({ weatherData, latitude, longitude }) {
     latitude = 30.005493;
     longitude = 31.477898;
   }
-
-  // memorize opt
   const options = useMemo(() => {
     return {
       enableGlobeGlow: true,
@@ -79,19 +77,7 @@ function FocusTimer({ weatherData, latitude, longitude }) {
     document.getElementById("beep").volume = volumeLev;
     document.getElementById("beep1").volume = volumeLev;
   }, [volumeLev]);
-
-  useEffect(() => {
-    if (timeLeft === 0 && cycle === 0) {
-      setCycle(1);
-      playSound(soundChoice.current);
-    } else if (timeLeft === 0 && cycle === 1) {
-      setCycle(0);
-      playSound(soundChoice.current);
-      setTimeLeft(sessionLength * 60 * 1000);
-    }
-  }, [timeLeft, sessionLength, cycle, soundChoice]);
-
-  const reset = () => {
+  const reset = useCallback(() => {
     console.log("reset func triggered");
     setPlayOn(false);
     setCycle(0);
@@ -99,7 +85,14 @@ function FocusTimer({ weatherData, latitude, longitude }) {
     setSessionLength(25);
     soundChoice.current.pause();
     soundChoice.current.currentTime = 0;
-  };
+  }, [soundChoice]);
+  useEffect(() => {
+    if (timeLeft === 0 && cycle === 0) {
+      setCycle(1);
+      reset();
+      playSound(soundChoice.current);
+    }
+  }, [timeLeft, cycle, reset, soundChoice]);
 
   const handleSwitchChange = () => {
     if (soundChoice === sound1) {

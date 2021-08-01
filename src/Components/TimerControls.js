@@ -68,7 +68,7 @@ function TimerControls({
             <Col xs={12} className="text-light  text-center">
               <span>Sound</span>
             </Col>
-            <Col sm={5} xs={12} md={4} className=" text-center text-light">
+            <Col sm={10} xs={10} md={12} className=" text-center text-light">
               <span>1</span>
               <Switch color="default" onChange={handleSwitchChange} />
               <span>2</span>
