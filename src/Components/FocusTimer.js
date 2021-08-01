@@ -1,6 +1,6 @@
 import React from "react";
 import ReactGlobe from "react-globe";
-
+import { useMemo } from "react";
 // import * as THREE from "three";
 import { useState, useEffect, useRef } from "react";
 import useInterval from "react-useinterval";
@@ -11,7 +11,6 @@ import { Container, Row, Col, Jumbotron } from "react-bootstrap";
 import beep1 from "../sounds/beep1.mp3";
 import beep2 from "../sounds/beep2.mp3";
 import "./FocusTimer.css";
-
 
 function FocusTimer({ weatherData, latitude, longitude }) {
   const [sessionLength, setSessionLength] = useState(25);
@@ -32,6 +31,22 @@ function FocusTimer({ weatherData, latitude, longitude }) {
     latitude = 30.005493;
     longitude = 31.477898;
   }
+  const options = useMemo(() => {
+    return {
+      enableGlobeGlow: true,
+      globeGlowCoefficient: 0.1,
+      globeGlowColor: "gold",
+      cameraAutoRotateSpeed: 0.9,
+      cameraRotateSpeed: 1,
+      enableCameraAutoRotate: true,
+      enableCameraRotate: true,
+      cameraMaxDistanceRadiusScale: 20,
+      enableCameraZoom: false,
+      enableMarkerGlow: true,
+      markerRadiusScaleRange: [0.005, 0.02],
+      markerType: "dot",
+    };
+  }, []);
 
   // properties of the marker on the globe
   const markers = [
@@ -98,28 +113,6 @@ function FocusTimer({ weatherData, latitude, longitude }) {
   };
   return (
     <>
-      {animationSequence && (
-        <ReactGlobe
-          markers={markers}
-          animations={animationSequence}
-          height="100vh"
-          width="100%"
-          options={{
-            enableGlobeGlow: true,
-            globeGlowCoefficient: 0.1,
-            globeGlowColor: "gold",
-            cameraAutoRotateSpeed: 0.5,
-            cameraRotateSpeed: 1,
-            enableCameraAutoRotate: true,
-            enableCameraRotate: true,
-            cameraMaxDistanceRadiusScale: 20,
-            enableCameraZoom: false,
-            enableMarkerGlow: true,
-            markerRadiusScaleRange: [0.005, 0.02],
-            markerType: "dot",
-          }}
-        />
-      )}
       <div>
         {/* <button onClick={() => setAnimationSequence("singapore")}>
           Go to Singapore
@@ -171,8 +164,16 @@ function FocusTimer({ weatherData, latitude, longitude }) {
         </Container>
         <audio id="beep1" src={beep1} ref={sound1} />
         <audio id="beep" src={beep2} ref={sound2} />
-
       </div>
+      {animationSequence && (
+        <ReactGlobe
+          markers={markers}
+          animations={animationSequence}
+          height="100vh"
+          width="100%"
+          options={options}
+        />
+      )}
     </>
   );
 }
