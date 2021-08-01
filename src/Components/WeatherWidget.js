@@ -46,14 +46,14 @@ export default function WeatherWidget({ weatherData }) {
             />
           </div>
           <div>
-            <h3 style={{ color: "white" }}>
+            <h5 style={{ color: "white" }}>
               {" "}
               {Math.round(weatherData.temperature)}°C{" "}
-            </h3>
+            </h5>
 
-            <h4 style={{ color: "white", alignSelf: "center" }}>
+            <h5 style={{ color: "white", alignSelf: "center" }}>
               {weatherData.city}
-            </h4>
+            </h5>
           </div>
         </div>
       </div>
