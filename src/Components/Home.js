@@ -70,7 +70,7 @@ export default function Home({
                 backgroundPosition: "center",
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
-                height: "100vh",
+                height: "101vh",
               }
             : { backgroundColor: "black", height: "100vh" }
         }
@@ -155,7 +155,7 @@ export default function Home({
             </div>
           </Fade>
         </div>
-      </div>{" "}
+      </div>
     </ThemeProvider>
   );
 }
