@@ -169,6 +169,7 @@ export default function SwipeableTemporaryDrawer() {
       {["left"].map((anchor, index) => (
         <React.Fragment key={index}>
           <Button
+            id="menu"
             onClick={toggleDrawer(anchor, true)}
             style={{
               position: "absolute",
@@ -177,6 +178,9 @@ export default function SwipeableTemporaryDrawer() {
               top: 0,
               color: "#00FF41",
             }}
+
+            // text={{ text: "click" }}
+
           >
             <MenuIcon />
             MENU

@@ -82,11 +82,12 @@ export default function RoboCodingQuiz() {
     >
       <div>
         <Box className={classes.box}>
-          <h2>Welcome to the RoboQuiz</h2>
-          <h3>
+          <h4 style={{ marginTop: "20px" }}>Welcome to the RoboQuiz</h4>
+          <br />
+          <h5>
             This quiz is designed for you to refresh your coding skills and help
             you on your journey to becoming a Rocket Coder 🚀
-          </h3>
+          </h5>
           {playAgainBtn && (
             <>
               <Button className={classes.againBtn} onClick={refreshPage}>
