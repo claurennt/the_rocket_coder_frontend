@@ -120,7 +120,7 @@ function FocusTimer({ weatherData, latitude, longitude }) {
           fluid
           id="wrap"
           className="d-flex align-items-center justify-content-center"
-          style={{ position: "absolute", top: "10px" }}
+          style={{ position: "absolute", top: "30px" }}
         >
           <Jumbotron id="jumbo" className="bg-transparent px-5 pt-5 pb-4">
             <Row>
