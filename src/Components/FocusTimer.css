@@ -4,11 +4,15 @@ body {
 }
 
 #wrap {
-  height: 90vh;
-  width: 35vw;
+  height: 96vh;
+  width: 30vw;
   margin-left: 0px;
 }
 
 .material-icons {
   font-style: normal;
+}
+.card {
+  background-color: transparent !important;
+  opacity: 20;
 }
