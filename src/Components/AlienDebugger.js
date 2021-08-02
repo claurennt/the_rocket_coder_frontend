@@ -33,6 +33,15 @@ const useStyles = makeStyles({
     textAlign: "center",
     lineHeight: "1em",
   },
+  textFetch: {
+    fontFamily: "Audiowide",
+    fontSize: "40px",
+    color: "white",
+    textAlign: "center",
+    lineHeight: "1em",
+    position: "absolute",
+    top: "2%",
+  },
 
   button: {
     position: "absolute",
@@ -65,7 +74,7 @@ export default function AlienDebugger() {
   const classes = useStyles();
   const [firstDialogue, setFirstDialogue] = useState(false);
   const [secondDialogue, setSecondDialogue] = useState(false);
-
+  const [isFetching, setIsFetching] = useState(false);
   const [openSnack, setOpenSnack] = useState(false);
 
   const [googleLinks, setGoogleLinks] = useState();
@@ -94,6 +103,7 @@ export default function AlienDebugger() {
   useEffect(() => {
     if (!listening && finalTranscript) {
       console.log("send transcript to GoogleThis", finalTranscript);
+      setIsFetching(true);
       axios
         .post("https://rocket-coder-backend.herokuapp.com/googlethis", {
           transcript: finalTranscript,
@@ -145,7 +155,7 @@ export default function AlienDebugger() {
             right="5%"
           >
             {/* show links after backend response */}
-            {googleLinks && (
+            {googleLinks && !isFetching && (
               <>
                 <GoogleLinks googleLinks={googleLinks} />
               </>
@@ -189,7 +199,7 @@ export default function AlienDebugger() {
               cursor={{ element: "" }}
             >
               <Typist.Delay ms={2000} />
-              <p>Hi there, I am your alien debugger.. </p>
+              <p>Hi there, I am your alien debugger...</p>
               <p>Explain to me your code</p>
               <p>Tell me the type of errors you get...</p>
             </Typist>
@@ -213,8 +223,17 @@ export default function AlienDebugger() {
           )}
           {/* show what the user asked on screen */}
           {finalTranscript && (
-            <Typist className={classes.text} cursor={{ element: "" }}>
-              <p>{finalTranscript}</p>
+            <Typist
+              className={classes.text}
+              cursor={{ element: "" }}
+              onTypingDone={() => {
+                setTimeout(() => {
+                  setIsFetching(false);
+                }, 3000);
+              }}
+            >
+              <p>"{finalTranscript}"</p>
+              <p>Allright, I'm on it...</p>
             </Typist>
           )}
         </Grid>
