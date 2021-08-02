@@ -1,11 +1,11 @@
-import React from 'react';
+// import React, { useState } from "react";
+// import { Editor, EditorState } from "draft-js";
+// import MyEditor from "./Editor";
 
-function Shortcuts() {
-    return (
-        <div>
-            <h1>Shortcuts</h1>
-        </div>
-    );
-}
-
-export default Shortcuts;
+// export default function Shortcuts() {
+//   return (
+//     <div id="editor">
+//       <MyEditor />
+//     </div>
+//   );
+// }
