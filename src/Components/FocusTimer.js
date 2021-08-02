@@ -1,6 +1,7 @@
 import React from "react";
 import ReactGlobe from "react-globe";
 import { useMemo } from "react";
+import Grow from "@material-ui/core/Grow";
 // import * as THREE from "three";
 import { useState, useEffect, useRef, useCallback } from "react";
 import useInterval from "react-useinterval";
@@ -12,7 +13,7 @@ import beep1 from "../sounds/beep1.mp3";
 import beep2 from "../sounds/beep2.mp3";
 import "./FocusTimer.css";
 
-function FocusTimer({ weatherData, latitude, longitude }) {
+export default function FocusTimer({ weatherData, latitude, longitude }) {
   const [sessionLength, setSessionLength] = useState(25);
   const [cycle, setCycle] = useState(0);
   const [timeLeft, setTimeLeft] = useState(sessionLength * 60 * 1000);
@@ -22,7 +23,7 @@ function FocusTimer({ weatherData, latitude, longitude }) {
   const sound2 = useRef();
   const [soundChoice, setSoundChoice] = useState(sound2);
   const [volumeLev, setVolumeLev] = useState(0.5);
-
+  const [activitiesdata, setActivitiesData] = useState();
   useInterval(() => setTimeLeft(timeLeft - 1000), playOn ? 1000 : undefined);
   const [animationSequence, setAnimationSequence] = useState([]);
 
@@ -106,21 +107,36 @@ function FocusTimer({ weatherData, latitude, longitude }) {
   const playSound = (sound) => {
     sound.play();
   };
+  useEffect(() => {
+    if (timeLeft === 0 && cycle === 0) {
+      const activitiesUrl = `https://rocket-coder-backend.herokuapp.com/activities`;
+      fetch(activitiesUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          const randomactivityData =
+            data[Math.floor(Math.random() * data.length)];
+          setActivitiesData({
+            quote: randomactivityData.quote,
+            author: randomactivityData.author,
+            activity: randomactivityData.activity,
+          });
+
+          setTimeout(() => {
+            setActivitiesData();
+          }, 60000);
+
+          console.log(activitiesdata);
+        });
+    }
+  }, [timeLeft, cycle, activitiesdata]);
   return (
     <>
       <div>
-        {/* <button onClick={() => setAnimationSequence("singapore")}>
-          Go to Singapore
-        </button>
-        <button onClick={() => setAnimationSequence("world")}>
-          Travel the world
-        </button> */}
-
         <Container
           fluid
           id="wrap"
           className="d-flex align-items-center justify-content-center"
-          style={{ position: "absolute", top: "30px" }}
+          style={{ position: "absolute", top: "30px", marginLeft: "0px" }}
         >
           <Jumbotron id="jumbo" className="bg-transparent px-5 pt-5 pb-4">
             <Row>
@@ -140,7 +156,7 @@ function FocusTimer({ weatherData, latitude, longitude }) {
               </Col>
             </Row>
             <Row className="d-flex justify-content-center">
-              <Col sm={12} md={6} className="">
+              <Col sm={14} md={8} className="">
                 <Timer timeLeft={timeLeft} mode={mode} cycle={cycle} />
               </Col>
             </Row>
@@ -160,6 +176,89 @@ function FocusTimer({ weatherData, latitude, longitude }) {
         <audio id="beep1" src={beep1} ref={sound1} />
         <audio id="beep" src={beep2} ref={sound2} />
       </div>
+
+      {activitiesdata && (
+        <>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              position: "absolute",
+              right: "40px",
+              fontSize: "20px",
+              maxWidth: "340px",
+              top: "160px",
+              alignItems: "center",
+              maxHeight: "600px",
+              padding: "20px",
+            }}
+          >
+            <Grow
+              in={activitiesdata}
+              style={{
+                transformOrigin: "5 5 5",
+                color: "#00FF41",
+                display: "block",
+                position: "relative",
+              }}
+              {...(activitiesdata ? { timeout: 2000 } : {})}
+            >
+              <h3>⏰ Time is up</h3>
+            </Grow>
+            <Grow
+              in={activitiesdata}
+              style={{
+                transformOrigin: "5 5 5",
+                color: "#00FF41",
+                display: "block",
+                position: "relative",
+              }}
+              {...(activitiesdata ? { timeout: 3000 } : {})}
+            >
+              <p>As {activitiesdata.author} once said :</p>
+            </Grow>
+            <Grow
+              in={activitiesdata}
+              style={{
+                transformOrigin: "5 5 5",
+                color: "#00FF41",
+                display: "block",
+                position: "relative",
+              }}
+              {...(activitiesdata ? { timeout: 4000 } : {})}
+            >
+              <em>
+                <p>"{activitiesdata.quote}"</p>
+              </em>
+            </Grow>
+            <Grow
+              in={activitiesdata}
+              style={{
+                transformOrigin: "5 5 5",
+                color: "#00FF41",
+                display: "block",
+                position: "relative",
+              }}
+              {...(activitiesdata ? { timeout: 5000 } : {})}
+            >
+              <h3> ☕ Take a break </h3>
+            </Grow>
+
+            <Grow
+              in={activitiesdata}
+              style={{
+                transformOrigin: "5 5 5",
+                color: "#00FF41",
+                display: "block",
+                position: "relative",
+              }}
+              {...(activitiesdata ? { timeout: 6000 } : {})}
+            >
+              <p>{activitiesdata.activity}</p>
+            </Grow>
+          </div>
+        </>
+      )}
       {animationSequence && (
         <ReactGlobe
           markers={markers}
@@ -172,5 +271,3 @@ function FocusTimer({ weatherData, latitude, longitude }) {
     </>
   );
 }
-
-export default FocusTimer;
