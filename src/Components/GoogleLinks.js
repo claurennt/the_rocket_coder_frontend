@@ -52,7 +52,11 @@ export default function GoogleLinks({ googleLinks }) {
               }}
               {...(googleLinks ? { timeout: Number(index + "000") } : {})}
             >
-              <Link className={classes.linkTitle} href={result.url}>
+              <Link
+                target="_blank"
+                className={classes.linkTitle}
+                href={result.url}
+              >
                 {result.title}
               </Link>
             </Grow>
@@ -78,6 +82,7 @@ export default function GoogleLinks({ googleLinks }) {
               color: "black",
               width: "320px",
             }}
+            target="_blank"
             href={googleLinks.results[3].url}
           >
             {" "}
