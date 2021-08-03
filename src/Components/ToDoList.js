@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Input from "@material-ui/core/Input";
 import IconButton from "@material-ui/core/IconButton";
 import { useStyles } from "./MainBodyStyles";
@@ -8,14 +8,28 @@ import { nanoid } from "nanoid";
 import { Scrollbars } from "react-custom-scrollbars";
 import Task from "./Task";
 
+const { REACT_APP_NAMESPACE } = process.env;
+const localStorageTaskNameSpace = `${REACT_APP_NAMESPACE}-tasks`;
+
 const ToDo = () => {
   const classes = useStyles();
   const [tasks, setTasks] = useState([]);
 
-  // const storedTasks = localStorage.getItem("tasks", JSON.parse(tasks));
-  // if (storedTasks) console.log(storedTasks);
-  // console.log(localStorage.setItem("tasks", JSON.stringify(tasks)));
+  useEffect(() => {
+    if (tasks.length) {
+      localStorage.setItem(localStorageTaskNameSpace, JSON.stringify(tasks));
+    }
+  }, [tasks]);
 
+  useEffect(() => {
+    const json = localStorage.getItem(localStorageTaskNameSpace);
+    const savedTasks = JSON.parse(json);
+    if (savedTasks) {
+      setTasks(savedTasks);
+    }
+  }, []);
+
+  console.log(tasks);
   const renderThumb = () => {
     const thumbStyle = {
       backgroundColor: "white",
