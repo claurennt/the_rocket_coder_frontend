@@ -11,8 +11,8 @@ import AlienDebugger from "./Components/AlienDebugger";
 import DiscoverEvents from "./Components/DiscoverEvents";
 import FocusTimer from "./Components/FocusTimer";
 import RoboCodingQuiz from "./Components/RoboCodingQuiz";
-import Shortcuts from "./Components/Shortcuts";
-// import SpaceMusic from "./rComponents/SpaceMusic";
+import ShortcutsGenerator from "./Components/ShortcutsGenerator";
+import Credits from "./Components/Credits";
 
 // import Paper from "@material-ui/core/Paper";
 
@@ -78,11 +78,14 @@ function App() {
         <Route path="/robocodingquiz/">
           <RoboCodingQuiz />
         </Route>
-        <Route path="/shortcuts/">
-          <Shortcuts />
+        <Route path="/shortcutsgenerator/">
+          <ShortcutsGenerator />
         </Route>
         <Route path="/aliendebugger">
           <AlienDebugger />
+        </Route>
+        <Route path="/credits/">
+          <Credits />
         </Route>
         <Route path="/">
           <Home

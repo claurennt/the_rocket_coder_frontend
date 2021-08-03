@@ -229,10 +229,11 @@ export default function AlienDebugger() {
               onTypingDone={() => {
                 setTimeout(() => {
                   setIsFetching(false);
-                }, 3000);
+                }, 2000);
               }}
             >
               <p>"{finalTranscript}"</p>
+
               <p>Allright, I'm on it...</p>
             </Typist>
           )}
@@ -251,7 +252,7 @@ export default function AlienDebugger() {
             backgroundColor: "#BDFFF3",
             color: "#5B217F",
           }}
-          message={"Still stuck? Click this!"}
+          message={"Still stuck? Click here!"}
         />
       </Snackbar>
     </>

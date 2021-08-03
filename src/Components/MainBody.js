@@ -79,7 +79,9 @@ export default function MainBody() {
           />
           <ToDo />
 
-          <Typography variant="subtitle1">{quoteElement}</Typography>
+          <Typography variant="subtitle1" style={{ marginLeft: "-32px" }}>
+            {quoteElement}
+          </Typography>
         </Box>
       </Box>
     </>

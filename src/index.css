@@ -16,3 +16,7 @@ code {
   border-color: transparent;
   outline: none;
 }
+
+button:focus {
+  outline: none;
+}
