@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 // styling MATERIAL ui typography elements
 const theme = createTheme();
+
 theme.typography.h3 = {
   color: "white",
   padding: "15px",

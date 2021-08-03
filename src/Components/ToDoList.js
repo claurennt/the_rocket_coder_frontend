@@ -88,7 +88,7 @@ const ToDo = () => {
     <>
       <form onSubmit={addNewTaskToList}>
         <Input
-          style={{ color: "white" }}
+          style={{ color: "white", marginTop: "2.5rem" }}
           className={classes.root}
           aria-describedby="todays-tasks"
           name="taskInput"
@@ -102,6 +102,7 @@ const ToDo = () => {
         renderThumbVertical={renderThumb}
         style={{
           maxHeight: "50%",
+          marginLeft: "-22px",
 
           marginTop: "2.5rem",
         }}
