@@ -16,15 +16,10 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import PublicIcon from "@material-ui/icons/Public";
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
-// import MusicNoteIcon from "@material-ui/icons/MusicNote";
-import MenuIcon from "@material-ui/icons/Menu";
-import {
-  AlienOutline,
-  // Telescope,
-  RobotLoveOutline,
-  RocketLaunchOutline,
-} from "mdi-material-ui";
 
+import MenuIcon from "@material-ui/icons/Menu";
+import { AlienOutline, RobotLoveOutline } from "mdi-material-ui";
+import ufo_icon from "./ufo_icon.png";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -68,12 +63,13 @@ export default function SwipeableTemporaryDrawer() {
     >
       <List className={classes.list}>
         {["Home"].map((text, index) => (
-          <Link to="/" className={classes.link} key={index}>
-            <ListItem button>
-              <ListItemIcon>
-                <HomeOutlinedIcon />
+          <Link to="/" className={classes.link} key={1}>
+            <ListItem button key={2}>
+              <ListItemIcon key={3}>
+                <HomeOutlinedIcon key={4} />
               </ListItemIcon>
               <ListItemText
+                key={5}
                 primary={<Typography variant="body2">{text}</Typography>}
               />
             </ListItem>
@@ -82,12 +78,13 @@ export default function SwipeableTemporaryDrawer() {
       </List>
       <List className={classes.list}>
         {["Alien Debugger"].map((text, index) => (
-          <Link to="/aliendebugger" className={classes.link} key={index}>
-            <ListItem button>
-              <ListItemIcon>
-                <AlienOutline />
+          <Link to="/aliendebugger" className={classes.link} key={6}>
+            <ListItem button key={7}>
+              <ListItemIcon key={8}>
+                <AlienOutline key={9} />
               </ListItemIcon>
               <ListItemText
+                key={10}
                 primary={<Typography variant="body2">{text}</Typography>}
               />
             </ListItem>
@@ -96,12 +93,13 @@ export default function SwipeableTemporaryDrawer() {
       </List>
       <List>
         {["Focus Timer"].map((text, index) => (
-          <Link to="/focustimer" className={classes.link} key={index}>
-            <ListItem button>
-              <ListItemIcon>
-                <PublicIcon />
+          <Link to="/focustimer" className={classes.link} key={11}>
+            <ListItem button key={12}>
+              <ListItemIcon key={13}>
+                <PublicIcon key={14} />
               </ListItemIcon>
               <ListItemText
+                key={15}
                 primary={<Typography variant="body2">{text}</Typography>}
               />
             </ListItem>
@@ -124,12 +122,13 @@ export default function SwipeableTemporaryDrawer() {
       </List> */}
       <List>
         {["Robo Coding Quiz"].map((text, index) => (
-          <Link to="/robocodingquiz" className={classes.link} key={index}>
-            <ListItem button key={index}>
-              <ListItemIcon>
-                <RobotLoveOutline />
+          <Link to="/robocodingquiz" className={classes.link} key={16}>
+            <ListItem button key={17}>
+              <ListItemIcon key={18}>
+                <RobotLoveOutline key={19} />
               </ListItemIcon>
               <ListItemText
+                key={20}
                 primary={<Typography variant="body2">{text}</Typography>}
               />
             </ListItem>
@@ -137,13 +136,19 @@ export default function SwipeableTemporaryDrawer() {
         ))}
       </List>
       <List>
-        {["Shortcuts"].map((text, index) => (
-          <Link to="/shortcuts" className={classes.link} key={index}>
-            <ListItem button key={index}>
-              <ListItemIcon>
-                <RocketLaunchOutline />
+        {["Shortcuts Generator"].map((text, index) => (
+          <Link to="/shortcutsgenerator" className={classes.link} key={21}>
+            <ListItem button key={22}>
+              <ListItemIcon key={23}>
+                <img
+                  src={ufo_icon}
+                  key={24}
+                  style={{ width: "24px", margin: "0", padding: "0" }}
+                  alt="ufo"
+                />
               </ListItemIcon>
               <ListItemText
+                key={25}
                 primary={<Typography variant="body2">{text}</Typography>}
               />
             </ListItem>
@@ -152,9 +157,10 @@ export default function SwipeableTemporaryDrawer() {
       </List>
       <List>
         {["Credits"].map((text, index) => (
-          <Link to="/shortcuts" className={classes.link}>
-            <ListItem button key={index}>
+          <Link to="/credits" className={classes.link} key={26}>
+            <ListItem button key={27}>
               <ListItemText
+                key={28}
                 primary={<Typography variant="body2">{text}</Typography>}
               />
             </ListItem>
@@ -180,7 +186,6 @@ export default function SwipeableTemporaryDrawer() {
             }}
 
             // text={{ text: "click" }}
-
           >
             <MenuIcon />
             MENU
