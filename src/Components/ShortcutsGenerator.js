@@ -17,6 +17,7 @@ import { useSpring, animated } from "react-spring";
 
 import Box from "@material-ui/core/Box";
 import { ToastsContainer, ToastsStore } from "react-toasts";
+const localStorageShortcutsNameSpace = process.env.REACT_APP_SHORTCUTSSPACE;
 
 export default function Keyboard() {
   const [open, setOpen] = useState(false);
@@ -27,6 +28,24 @@ export default function Keyboard() {
   const [shortcutName, setShortcutName] = useState([]);
 
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (shortcutName.length) {
+      localStorage.setItem(
+        localStorageShortcutsNameSpace,
+        JSON.stringify(shortcutName)
+      );
+    }
+  }, [shortcutName]);
+
+  useEffect(() => {
+    const json = localStorage.getItem(localStorageShortcutsNameSpace);
+    const savedShortcuts = JSON.parse(json);
+    if (savedShortcuts) {
+      setShortcutName(savedShortcuts);
+    }
+  }, []);
+
   // entering animation fro keyboard
   const styles = useSpring({
     loop: false,
