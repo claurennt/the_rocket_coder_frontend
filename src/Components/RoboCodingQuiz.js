@@ -118,7 +118,6 @@ export default function RoboCodingQuiz() {
               <MenuItem value={3}>Three</MenuItem>
               <MenuItem value={5}>Five</MenuItem>
               <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={15}>Fifteen</MenuItem>
             </Select>
           </FormControl>
         )}
