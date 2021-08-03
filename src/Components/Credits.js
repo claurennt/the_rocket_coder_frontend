@@ -6,7 +6,7 @@ import React from "react";
 
 import "./styles.css";
 // Import the necessary styles, or include them another way with your build process
-import "react-star-wars-crawl/lib/index.css";
+
 import video from "../Components/video.mp4";
 export default function Credits() {
   // const styles = {
