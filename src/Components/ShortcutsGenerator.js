@@ -1,17 +1,22 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 
 import "./Keyboard.css";
-import Box from "@material-ui/core/Box";
+
 import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
+
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-import VirtualKeyboard from "./VirtualKeyboard";
 import ufo_icon from "./ufo_icon.png";
+
+import MacKeyboard from "@uiw/react-mac-keyboard";
+import { useSpring, animated } from "react-spring";
+
+import Box from "@material-ui/core/Box";
+import { ToastsContainer, ToastsStore } from "react-toasts";
 
 export default function Keyboard() {
   const [open, setOpen] = useState(false);
@@ -19,6 +24,23 @@ export default function Keyboard() {
   const [shortcut, setShortcut] = useState([]);
 
   const [shortcutComment, setShortcutComment] = useState("");
+  const [shortcutName, setShortcutName] = useState([]);
+
+  const inputRef = useRef(null);
+  // entering animation fro keyboard
+  const styles = useSpring({
+    loop: false,
+    to: [{ opacity: 1 }],
+    from: { opacity: 0 },
+    delay: 200,
+  });
+  const stylesText = useSpring({
+    loop: false,
+    to: [{ opacity: 1 }],
+    from: { opacity: 0 },
+    delay: 400,
+  });
+
   const handleKeyDown = useCallback(
     (e) => {
       if (shortcut.includes(e.which || keyNr.includes(e.key))) return;
@@ -40,6 +62,23 @@ export default function Keyboard() {
     setOpen(false);
   };
 
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    const newShortcut = {
+      shortcut: shortcut.join("+"),
+      comment: shortcutComment,
+    };
+    setShortcutName(
+      shortcutName ? [...shortcutName, newShortcut] : newShortcut
+    );
+
+    ToastsStore.success("Shortcut saved!");
+    setKeyNr("");
+    setShortcut("");
+    setShortcutComment("");
+    inputRef.current.blur();
+  };
+  console.log(shortcutName);
   return (
     <Box
       display="flex"
@@ -48,26 +87,92 @@ export default function Keyboard() {
       textAlign="center"
     >
       <Box>
-        <Typography variant="h3" color="secondary">
+        <Typography
+          variant="h3"
+          color="secondary"
+          style={{ marginTop: "30px" }}
+        >
           Shortcuts Generator
         </Typography>
       </Box>
-      <VirtualKeyboard
-        shortcut={shortcut}
-        shortcutComment={shortcutComment}
-        handleKeyDown={handleKeyDown}
-        setShortcutComment={setShortcutComment}
-        keyNr={keyNr}
-      />
+
+      <Box style={{ margin: "0 auto" }}>
+        <animated.div style={stylesText}>
+          <form
+            onSubmit={(e) => handleOnSubmit(e)}
+            style={{
+              margin: "0 auto",
+              marginTop: "10px",
+              marginBottom: "50px",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <input
+              style={{
+                width: "40vw",
+                textAlign: "center",
+                margin: "10px",
+                paddingTop: "40px",
+                fontSize: "1.25rem",
+                outline: "0",
+                borderWidth: "0 0 2px",
+                borderColor: "#00FF41",
+
+                focus: {
+                  borderColor: "green",
+                },
+              }}
+              placeholder="What is this shortcut for?"
+              ref={inputRef}
+              label="Shortcut comment"
+              name="textinput"
+              value={shortcutComment}
+              onFocus={() => {
+                console.log("focusinnnnng");
+                document.onkeydown = () => {};
+              }}
+              onChange={(e) => {
+                setShortcutComment(e.target.value);
+                localStorage.setItem("shortcutComment", e.target.value);
+              }}
+              onBlur={(e) => {
+                console.log("blurreeeeed");
+                document.onkeydown = handleKeyDown;
+              }}
+              onSubmit={() => {}}
+            />
+          </form>
+        </animated.div>
+        <ToastsContainer store={ToastsStore} />
+      </Box>
+
+      <animated.div style={styles}>
+        <MacKeyboard
+          keyCode={keyNr}
+          onMouseDown={(e, item) => {
+            console.log(e);
+            if (item.keycode > -1) {
+              if (keyNr.includes(item.keycode)) return;
+              setKeyNr((prevKeyCodes) => [...prevKeyCodes, item.keycode]);
+              setShortcut((prevKey) => [...prevKey, item.name]);
+            }
+          }}
+        />
+      </animated.div>
       <Button
-        style={{
-          maxWidth: "30px",
-          maxHeight: "30px",
-          minWidth: "30px",
-          minHeight: "30px",
-        }}
         onClick={handleClickOpen}
+        style={{
+          backgroundColor: "white",
+          border: "1px solid #00FF41",
+          padding: "0",
+          color: "black",
+          width: "230px",
+          margin: "0 auto",
+          top: "30px",
+        }}
       >
+        See my shortcuts
         <img src={ufo_icon} key={24} style={{ width: "40px" }} alt="ufo" />
       </Button>
       <Dialog
@@ -79,22 +184,19 @@ export default function Keyboard() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
-        <DialogContent style={{ height: "600px" }}>
-          <DialogContentText id="alert-dialog-description">
-            {shortcut}= {shortcutComment}}
-          </DialogContentText>
+        <DialogTitle id="alert-dialog-title">{"My Shortcuts"}</DialogTitle>
+        <DialogContent style={{ height: "600px", overflow: "scroll" }}>
+          <ul>
+            {shortcutName &&
+              shortcutName.map((s, i) => (
+                <DialogContentText id="alert-dialog-description">
+                  <li key={i}>
+                    <strong>{s.shortcut}</strong> = <em>{s.comment}</em>
+                  </li>
+                </DialogContentText>
+              ))}
+          </ul>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Disagree
-          </Button>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
       </Dialog>
     </Box>
   );
