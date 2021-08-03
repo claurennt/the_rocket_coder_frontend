@@ -155,7 +155,7 @@ export default function Home({
             </div>
           </Fade>
         </div>
-      </div>{" "}
+      </div>
     </ThemeProvider>
   );
 }
