@@ -46,7 +46,7 @@ export default function Credits() {
               <img src={zina} alt="" width="255px" height="260px" />
             </div>
             <h2>Zina</h2>
-            <ul style={{ listStyleType: "none" }}>
+            <ul className="credits-list">
               <li>
                 {" "}
                 <a
@@ -68,9 +68,8 @@ export default function Credits() {
               <img src={claudia} alt="" width="255px" height="260px" />
             </div>
             <h2>Claudia</h2>
-            <ul
-              style={{ listStyleType: "none", textAlign: "center important!" }}
-            >
+
+            <ul className="credits-list">
               <li>
                 <a
                   className="github"
