@@ -138,7 +138,10 @@ export default function FocusTimer({ weatherData, latitude, longitude }) {
           className="d-flex align-items-center justify-content-center"
           style={{ position: "absolute", top: "30px", marginLeft: "0px" }}
         >
-          <Jumbotron id="jumbo" className="bg-transparent px-5 pt-5 pb-4">
+          <Jumbotron
+            id="jumbo"
+            className="bg-transparent px-5 pt-5 pb-4 d-flex flex-column "
+          >
             <Row>
               <Col className="mb-3">
                 <h1 id="title" className="text-center text-light">
@@ -147,7 +150,7 @@ export default function FocusTimer({ weatherData, latitude, longitude }) {
               </Col>
             </Row>
             <Row>
-              <Col sm={12} md={12}>
+              <Col sm={12} md={10}>
                 <TimesSet
                   setSessionLength={setSessionLength}
                   sessionLength={sessionLength}
@@ -197,7 +200,7 @@ export default function FocusTimer({ weatherData, latitude, longitude }) {
               in={activitiesdata}
               style={{
                 transformOrigin: "5 5 5",
-                color: "#00FF41",
+                color: "white",
                 display: "block",
                 position: "relative",
               }}
@@ -209,7 +212,7 @@ export default function FocusTimer({ weatherData, latitude, longitude }) {
               in={activitiesdata}
               style={{
                 transformOrigin: "5 5 5",
-                color: "#00FF41",
+                color: "white",
                 display: "block",
                 position: "relative",
               }}
@@ -221,7 +224,7 @@ export default function FocusTimer({ weatherData, latitude, longitude }) {
               in={activitiesdata}
               style={{
                 transformOrigin: "5 5 5",
-                color: "#00FF41",
+                color: "white",
                 display: "block",
                 position: "relative",
               }}
@@ -235,7 +238,7 @@ export default function FocusTimer({ weatherData, latitude, longitude }) {
               in={activitiesdata}
               style={{
                 transformOrigin: "5 5 5",
-                color: "#00FF41",
+                color: "white",
                 display: "block",
                 position: "relative",
               }}
@@ -248,7 +251,7 @@ export default function FocusTimer({ weatherData, latitude, longitude }) {
               in={activitiesdata}
               style={{
                 transformOrigin: "5 5 5",
-                color: "#00FF41",
+                color: "white",
                 display: "block",
                 position: "relative",
               }}
