@@ -113,11 +113,10 @@ export default function RoboCodingQuiz() {
               name="select"
               style={{ width: "50%" }}
             >
-              <MenuItem value={1}>One</MenuItem>
-              <MenuItem value={2}>Two</MenuItem>
               <MenuItem value={3}>Three</MenuItem>
               <MenuItem value={5}>Five</MenuItem>
               <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={15}>Fifteen</MenuItem>
             </Select>
           </FormControl>
         )}
