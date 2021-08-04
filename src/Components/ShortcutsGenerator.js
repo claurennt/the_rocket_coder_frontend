@@ -69,7 +69,14 @@ export default function Keyboard() {
     loop: false,
     to: [{ opacity: 1 }],
     from: { opacity: 0 },
-    delay: 400,
+    delay: 600,
+  });
+
+  const stylesInstruction = useSpring({
+    loop: false,
+    to: [{ opacity: 1 }],
+    from: { opacity: 0 },
+    delay: 1000,
   });
 
   // save key numbers in a state for the keyboard and keyCode that pressed in another state
@@ -131,7 +138,9 @@ export default function Keyboard() {
             color="secondary"
             style={{ marginTop: "30px", fontSize: "2.75em", fontWeight: "500" }}
           >
-            Shortcuts Generator
+            Shortcuts{" "}
+            <img src={ufo_icon} key={24} style={{ width: "50px" }} alt="ufo" />{" "}
+            Generator{" "}
           </Typography>
         </Box>
 
@@ -142,17 +151,34 @@ export default function Keyboard() {
               style={{
                 margin: "0 auto",
                 marginTop: "10px",
-                marginBottom: "50px",
+                marginBottom: "10px",
                 display: "flex",
                 flexDirection: "column",
               }}
             >
+              <animated.div style={stylesInstruction}>
+                <p
+                  style={{
+                    display: "flex",
+
+                    position: "absolute",
+                    right: "350px",
+                    top: "120px",
+                    fontSize: "0.8rem",
+                    color: "#979797",
+                    alignSelf: "flex-end",
+                  }}
+                >
+                  {" "}
+                  3. Press ↵ to save
+                </p>
+              </animated.div>
               <input
                 style={{
                   width: "40vw",
                   textAlign: "center",
                   margin: "10px",
-                  paddingTop: "40px",
+                  paddingTop: "20px",
                   fontSize: "1.25rem",
                   outline: "0",
                   borderWidth: "0 0 2px",
@@ -180,88 +206,115 @@ export default function Keyboard() {
                 }}
                 onSubmit={() => {}}
               />
+              <p
+                style={{
+                  display: "flex",
+
+                  fontSize: "0.8rem",
+                  color: "#979797",
+                  alignSelf: "start",
+                }}
+              >
+                2. Write a comment for your shortcut.
+              </p>
             </form>
           </animated.div>
           <ToastsContainer store={ToastsStore} />
         </Box>
 
-        <animated.div style={styles}>
-          <p
-            style={{
-              display: "flex",
-              justifyContent: "flex-start",
-              marginLeft: "5%",
-              fontSize: "0.9rem",
-              color: "#F5055A",
-            }}
-          >
-            1. Type shortcut on your laptopkeyboard
-          </p>
-          <MacKeyboard
-            keyCode={keyNr}
-            onMouseDown={(e, item) => {
-              console.log(e);
-              if (item.keycode > -1) {
-                if (keyNr.includes(item.keycode)) return;
-                setKeyNr((prevKeyCodes) => [...prevKeyCodes, item.keycode]);
-                setShortcut((prevKey) => [...prevKey, item.name]);
-              }
-            }}
-          />
-        </animated.div>
-
-        <Button
-          onClick={handleClickOpen}
-          style={{
-            backgroundColor: "white",
-            border: "1px solid #00FF41",
-            padding: "0",
-            color: "black",
-            width: "230px",
-            margin: "0 auto",
-            top: "30px",
+        <Box
+          styles={{
+            display: "flex",
+            flexDirection: "column",
           }}
         >
-          See my shortcuts
-          <img src={ufo_icon} key={24} style={{ width: "40px" }} alt="ufo" />
-        </Button>
-        <Dialog
-          open={open}
-          maxWidth="md"
-          height="80vh"
-          fullWidth
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{"My Shortcuts"}</DialogTitle>
-          <DialogContent style={{ height: "600px", overflow: "scroll" }}>
-            <ul>
-              {shortcutName &&
-                shortcutName.map((s, i) => (
-                  <DialogContentText
-                    id="alert-dialog-description"
-                    key={i + "0000"}
-                  >
-                    <li key={i}>
-                      <span>
-                        {" "}
-                        <strong>{s.shortcut}</strong> = <em>{s.comment}</em>{" "}
-                      </span>
-                      <Chip
-                        variant="outlined"
-                        size="small"
-                        label="౼"
-                        className={classes.chip}
-                        onClick={() => handleDeleteShortcut(i)}
-                        key={i + "00"}
-                      />
-                    </li>
-                  </DialogContentText>
-                ))}
-            </ul>
-          </DialogContent>
-        </Dialog>
+          <animated.div style={styles}>
+            <Box
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                marginTop: "30px",
+              }}
+            >
+              <p
+                style={{
+                  display: "flex",
+                  marginLeft: "140px",
+                  fontSize: "0.8rem",
+                  color: "#979797",
+                }}
+              >
+                1. Type shortcut on your laptop keyboard.
+              </p>
+              <Button
+                onClick={handleClickOpen}
+                style={{
+                  backgroundColor: "white",
+                  border: "1px solid #00FF41",
+                  padding: "0",
+                  right: "140px",
+                  color: "black",
+                  width: "230px",
+                }}
+              >
+                See my shortcuts
+              </Button>
+              <Dialog
+                open={open}
+                maxWidth="md"
+                height="80vh"
+                fullWidth
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"My Shortcuts"}
+                </DialogTitle>
+                <DialogContent style={{ height: "600px", overflow: "scroll" }}>
+                  <ul>
+                    {shortcutName &&
+                      shortcutName.map((s, i) => (
+                        <DialogContentText
+                          id="alert-dialog-description"
+                          key={i + "0000"}
+                        >
+                          <li key={i}>
+                            <span>
+                              {" "}
+                              <strong>{s.shortcut}</strong> ={" "}
+                              <em>{s.comment}</em>{" "}
+                            </span>
+                            <Chip
+                              variant="outlined"
+                              size="small"
+                              label="౼"
+                              className={classes.chip}
+                              onClick={() => handleDeleteShortcut(i)}
+                              key={i + "00"}
+                            />
+                          </li>
+                        </DialogContentText>
+                      ))}
+                  </ul>
+                </DialogContent>
+              </Dialog>
+            </Box>
+            <MacKeyboard
+              style={{ marginTop: "20px" }}
+              keyCode={keyNr}
+              onMouseDown={(e, item) => {
+                console.log(e);
+                if (item.keycode > -1) {
+                  if (keyNr.includes(item.keycode)) return;
+                  setKeyNr((prevKeyCodes) => [...prevKeyCodes, item.keycode]);
+                  setShortcut((prevKey) => [...prevKey, item.name]);
+                }
+              }}
+            />
+          </animated.div>
+        </Box>
       </Box>
     </>
   );

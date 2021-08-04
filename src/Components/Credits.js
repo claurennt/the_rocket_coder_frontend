@@ -11,51 +11,6 @@ import zina from "../Components/zina.png";
 import video from "../Components/video.mp4";
 import claudia from "../Components/claudia.png";
 export default function Credits() {
-  // const styles = {
-  //   container: {
-  //     width: "100%",
-  //     height: "100%",
-  //     background: "red",
-  //     overflow: "hidden",
-  //   },
-  //   fade: {
-  //     position: "relative",
-  //     width: "100%",
-  //     minHeight: "60vh",
-  //     top: "-25px",
-  //     backgroundImage: "linear-gradient(0deg, transparent, black 75%)",
-  //     zIndex: 1,
-  //   },
-  //   textContainer: {
-  //     display: "flex",
-  //     justifyContent: "center",
-  //     position: "relative",
-  //     height: "800px",
-  //     color: "#feda4a",
-  //     fontFamily: "'Pathway Gothic One', sans-serif",
-  //     fontSize: "500%",
-  //     fontWeight: "600",
-  //     letterSpacing: "6px",
-  //     lineHeight: "150%",
-  //     perspective: "400px",
-  //     textAlign: "justify",
-  //   },
-  //   crawl: {
-  //     position: "relative",
-  //     top: "9999px",
-  //     transformOrigin: "50% 100%",
-  //     animation: "crawl 60s linear",
-  //   },
-  //   title: {
-  //     fontSize: "20%",
-  //     textAlign: "center",
-  //   },
-  //   subTitle: {
-  //     margin: "0 0 100px",
-  //     textTransform: "uppercase",
-  //   },
-  // };
-
   return (
     <>
       <h2 style={{ textAlign: "center", padding: "10px" }}>
@@ -68,7 +23,7 @@ export default function Credits() {
               <img src={guelden} alt="" width="255px" height="260px" />
             </div>
             <h2>Gülden</h2>
-            <ul style={{ listStyleType: "none" }}>
+            <ul className="credits-list">
               <li>
                 {" "}
                 <a
