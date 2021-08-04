@@ -6,8 +6,10 @@ import React from "react";
 
 import "./styles.css";
 // Import the necessary styles, or include them another way with your build process
-
+import guelden from "../Components/guelden.png";
+import zina from "../Components/zina.png";
 import video from "../Components/video.mp4";
+import claudia from "../Components/claudia.png";
 export default function Credits() {
   // const styles = {
   //   container: {
@@ -57,43 +59,88 @@ export default function Credits() {
   return (
     <>
       <h2 style={{ textAlign: "center", padding: "10px" }}>
-        The Rocket Coder was coded by :
+        The Rocket Coder 🚀 was coded 👩🏻‍💻 by :
       </h2>
       <div>
         <div class="team">
           <div class="card">
             <div class="circle-container">
-              <h1>C</h1>
-            </div>
-            <h2>Claudia</h2>
-            <p>GitHub</p>
-            <p>Linkedin</p>
-          </div>
-
-          <div class="card">
-            <div class="circle-container">
-              <h1>Z</h1>
-            </div>
-            <h2>Zina</h2>
-            <p>GitHub</p>
-            <p>Linkedin</p>
-          </div>
-
-          <div class="card">
-            <div class="circle-container">
-              <h1>Z</h1>
+              <img src={guelden} alt="" width="255px" height="260px" />
             </div>
             <h2>Gülden</h2>
-            <p>GitHub</p>
-            <p>Linkedin</p>
+            <ul style={{ listStyleType: "none" }}>
+              <li>
+                {" "}
+                <a
+                  className="github"
+                  href="https://www.linkedin.com/mwlite/in/gülden-bayar-705962218"
+                >
+                  Linkedin
+                </a>
+              </li>
+              <li>
+                {" "}
+                <a className="github" href="https://github.com/GueldenBayar">
+                  GitHub
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="circle-container">
+              <img src={zina} alt="" width="255px" height="260px" />
+            </div>
+            <h2>Zina</h2>
+            <ul style={{ listStyleType: "none" }}>
+              <li>
+                {" "}
+                <a
+                  className="github"
+                  href="https://de.linkedin.com/in/zina-el-nahel"
+                >
+                  Linkedin
+                </a>
+              </li>
+              <li>
+                <a className="github" href="https://github.com/zinaelnahel">
+                  GitHub
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="circle-container">
+              <img src={claudia} alt="" width="255px" height="260px" />
+            </div>
+            <h2>Claudia</h2>
+            <ul
+              style={{ listStyleType: "none", textAlign: "center important!" }}
+            >
+              <li>
+                <a
+                  className="github"
+                  href="https://www.linkedin.com/in/hello-world-claudia-here/"
+                >
+                  Linkedin
+                </a>
+              </li>
+              <li>
+                {" "}
+                <a className="github" href="https://github.com/claurennt">
+                  GitHub
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
         <div></div>
         <video
           src={video}
-          width="1550"
+          width="1000"
           height="500"
           autoplay="autoplay"
+          controls="controls"
+          style={{ marginLeft: "200px" }}
         ></video>
         {/* <div
           style={{
