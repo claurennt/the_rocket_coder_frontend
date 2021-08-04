@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 
 import axios from "axios";
 import GoogleLinks from "./GoogleLinks.js";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
@@ -80,25 +80,32 @@ export default function AlienDebugger() {
   const [googleLinks, setGoogleLinks] = useState();
 
   let history = useHistory();
+  let location = useLocation();
+  console.log(location);
+
+  const alienSound = useMemo(
+    () =>
+      new Howl({
+        src: [AlienSound],
+        loop: false,
+        preload: true,
+        autoplay: true,
+        volume: 0.5,
+        onend: () => {
+          setFirstDialogue(true);
+        },
+      }),
+    []
+  );
 
   useEffect(() => {
-    const alienSound = new Howl({
-      src: [AlienSound],
-      loop: false,
-      preload: true,
-      autoplay: true,
-      volume: 0.5,
-      onend: () => {
-        setFirstDialogue(true);
-      },
-    });
     // stop the sound on route change
     history.listen((location) => {
       location.pathname === "/aliendebugger"
         ? alienSound.play()
         : alienSound.stop();
     });
-  }, [history]);
+  }, [history, alienSound]);
 
   useEffect(() => {
     if (!listening && finalTranscript) {
@@ -125,7 +132,7 @@ export default function AlienDebugger() {
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
   }
-
+  console.log(history);
   const handleClose = () => {
     setOpenSnack(false);
     setTimeout(() => {
@@ -137,14 +144,24 @@ export default function AlienDebugger() {
     setFirstDialogue(false);
     setSecondDialogue(false);
     setOpenSnack(false);
+    alienSound.stop();
     SpeechRecognition.startListening();
   };
 
   return (
     <>
-      <Button onClick={handleSkipScript} className={classes.button}>
-        {!finalTranscript ? "Skip ᐅ" : "Again ᐅ"}
-      </Button>
+      {!finalTranscript ? (
+        <Button onClick={handleSkipScript} className={classes.button}>
+          Skip ᐅ
+        </Button>
+      ) : (
+        <Button
+          onClick={() => window.location.reload()}
+          className={classes.button}
+        >
+          Again ᐅ
+        </Button>
+      )}
       <Box style={{ backgroundColor: "black" }}>
         <Container className={classes.root}>
           <Box
