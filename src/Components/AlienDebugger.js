@@ -147,7 +147,7 @@ export default function AlienDebugger() {
     alienSound.stop();
     SpeechRecognition.startListening();
   };
-
+  console.log(googleLinks);
   return (
     <>
       {!finalTranscript ? (
